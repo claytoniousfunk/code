@@ -379,7 +379,7 @@ for(int file = 1; file < NFiles+1; file++){
 //for(int file = 1; file < 20; file++){
 	if(file==147 || file==179 || file==184 || file==203 || file==238 || file==3 || file==314 || file==327 || file==360){continue;} // missing these root files [skims5]
 	cout << "Processing file " << file << "/"<<NFiles<< endl;
-	auto f = TFile::Open(Form("/home/clayton/Analysis/skims5/0000/HydJet_%d.root",file));
+	auto f = TFile::Open(Form("/home/clayton/Analysis/data/skims5/0000/HydJet_%d.root",file));
 
     TTree *inp_tree = (TTree*)f->Get("jet_tree;1");
 	Long64_t n_evts = inp_tree->GetEntriesFast();
