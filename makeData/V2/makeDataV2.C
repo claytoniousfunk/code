@@ -13,7 +13,7 @@
 // V2: to be used on data files, no flavor tagging
 
 
-#include "myProcesses/hiforest/plugin/eventMap_hiForest.h"
+#include "/home/clayton/Analysis/code/myProcesses/hiforest/plugin/eventMap_hiForest.h"
 #include <iostream>
 #include "TFile.h"
 #include "TRandom.h"
@@ -82,11 +82,11 @@ return (pTrel2 > 0) ? std::sqrt(pTrel2) : 0.0;
 
 
 
-void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
+void makeDataV2(double muPtCut = 10.0){
 
 	//////////////////////////////////////////////////////////////////////// jet variables ////////////////////////////////////////////////////////////////////////
 
-	vector <float> *pf_jtpt=0, *pf_jteta=0, *pf_jtphi=0, *pf_partonFlavor=0, *pf_hadronFlavor=0; 
+	vector <float> *jetpt=0, *jeteta=0, *jetphi=0, *partonFlavor=0, *hadronFlavor=0; 
 
 	//////////////////////////////////////////////////////////////////////// muon jet variables ////////////////////////////////////////////////////////////////////////
 
@@ -102,59 +102,157 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 	//////////////////////////////////////////////////////////////////////// DEFINE BINNING ///////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	const int numUsedEtaBins = 15;
-	float usedEtaEdges[numUsedEtaBins+1] = {-1.5,-1.3,-1.1,-0.9,-0.7,-0.5,-0.3,-0.1,0.1,0.3,0.5,0.7,0.9,1.1,1.3,1.5};
-	const int numUsedPtBins = 15;
-	float usedPtEdges[numUsedPtBins+1] = {50,60,70,80,90,100,120,140,160,180,200,250,300,350,400,500};
-
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////// DEFINE HISTOGRAMS /////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	
+	int NEtaBins = 300;
+	double etaMin = -1.5;
+	double etaMax = 1.5;
+	int NPtBins = 450;
+	double ptMin = 50.0;
+	double ptMax = 500.0;
+	int NPhiBins = 300;
+	double phiMin = -TMath::Pi();
+	double phiMax = TMath::Pi();
+	
+		////////////////////////////////////////// /////////////////////////////  Event variables ///////////////////////////////////////////////////////////////////////////////////
+
+		TH1D *h_vz = new TH1D("h_vz","data vz",60,-15.0,15.0);
+		TH1D *h_hiBin = new TH1D("h_hiBin","data hiBin",200,0,200);
 
 		////////////////////////////////////////// /////////////////////////////  JETS  ///////////////////////////////////////////////////////////////////////////////////
 
-		TH2D *h2 = new TH2D("h2","All jets",numUsedEtaBins,usedEtaEdges,numUsedPtBins,usedPtEdges);
+		TH1D *h_jetpt = new TH1D("h_jetpt","data jet pt",NPtBins,ptMin,ptMax);
+			// centrality regions for PbPb
+			TH1D *h_jetpt_cent0to10 = new TH1D("h_jetpt_cent0to10","centrality 0-10 %",NPtBins,ptMin,ptMax);
+			TH1D *h_jetpt_cent10to30 = new TH1D("h_jetpt_cent10to30","centrality 10-30 %",NPtBins,ptMin,ptMax);
+			TH1D *h_jetpt_cent30to50 = new TH1D("h_jetpt_cent30to50","centrality 30-50 %",NPtBins,ptMin,ptMax);
+			TH1D *h_jetpt_cent50to90 = new TH1D("h_jetpt_cent50to90","centrality 50-90 %",NPtBins,ptMin,ptMax);
+		TH1D *h_jeteta = new TH1D("h_jeteta","data jet #eta",NEtaBins,etaMin,etaMax);
+			TH1D *h_jeteta_cent0to10 = new TH1D("h_jeteta_cent0to10","centrality 0-10 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_jeteta_cent10to30 = new TH1D("h_jeteta_cent10to30","centrality 10-30 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_jeteta_cent30to50 = new TH1D("h_jeteta_cent30to50","centrality 30-50 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_jeteta_cent50to90 = new TH1D("h_jeteta_cent50to90","centrality 50-90 %",NEtaBins,etaMin,etaMax);
+		TH1D* h_jetphi = new TH1D("h_jetphi","data jet #phi",NPhiBins,phiMin,phiMax);
+			TH1D *h_jetphi_cent0to10 = new TH1D("h_jetphi_cent0to10","centrality 0-10 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_jetphi_cent10to30 = new TH1D("h_jetphi_cent10to30","centrality 10-30 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_jetphi_cent30to50 = new TH1D("h_jetphi_cent30to50","centrality 30-50 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_jetphi_cent50to90 = new TH1D("h_jetphi_cent50to90","centrality 50-90 %",NPhiBins,phiMin,phiMax);
+		
+		TH1D *h_mujetpt = new TH1D("h_mujetpt","data muon-jet pt",NPtBins,ptMin,ptMax);
+			// centrality regions for PbPb
+			TH1D *h_mujetpt_cent0to10 = new TH1D("h_mujetpt_cent0to10","centrality 0-10 %",NPtBins,ptMin,ptMax);
+			TH1D *h_mujetpt_cent10to30 = new TH1D("h_mujetpt_cent10to30","centrality 10-30 %",NPtBins,ptMin,ptMax);
+			TH1D *h_mujetpt_cent30to50 = new TH1D("h_mujetpt_cent30to50","centrality 30-50 %",NPtBins,ptMin,ptMax);
+			TH1D *h_mujetpt_cent50to90 = new TH1D("h_mujetpt_cent50to90","centrality 50-90 %",NPtBins,ptMin,ptMax);
+		TH1D *h_mujeteta = new TH1D("h_mujeteta","data jet #eta",NEtaBins,etaMin,etaMax);
+			TH1D *h_mujeteta_cent0to10 = new TH1D("h_mujeteta_cent0to10","centrality 0-10 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_mujeteta_cent10to30 = new TH1D("h_mujeteta_cent10to30","centrality 10-30 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_mujeteta_cent30to50 = new TH1D("h_mujeteta_cent30to50","centrality 30-50 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_mujeteta_cent50to90 = new TH1D("h_mujeteta_cent50to90","centrality 50-90 %",NEtaBins,etaMin,etaMax);
+		TH1D* h_mujetphi = new TH1D("h_mujetphi","data jet #phi",NPhiBins,phiMin,phiMax);
+			TH1D *h_mujetphi_cent0to10 = new TH1D("h_mujetphi_cent0to10","centrality 0-10 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_mujetphi_cent10to30 = new TH1D("h_mujetphi_cent10to30","centrality 10-30 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_mujetphi_cent30to50 = new TH1D("h_mujetphi_cent30to50","centrality 30-50 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_mujetphi_cent50to90 = new TH1D("h_mujetphi_cent50to90","centrality 50-90 %",NPhiBins,phiMin,phiMax);
+		
 		
 		
 		/////////////////////////////////////////////////////////////////   MUON-TAGGED JETS  //////////////////////////////////////////////////////////////////////////////
-
-		TH2D *h2_MJ = new TH2D("h2_MJ","All muon-tagged-jets",numUsedEtaBins,usedEtaEdges,numUsedPtBins,usedPtEdges);
-		// parse jet by species of particles
-		
-	
+	int NmuPtBins = 5000;
+	double muPtLow = 0.0;
+	double muPtHigh = 500.0;
+		TH1D *h_muPt = new TH1D("h_muPt","data muon pt",NmuPtBins,muPtLow,muPtHigh);
+			TH1D *h_muPt_cent0to10 = new TH1D("h_muPt_cent0to10","centrality 0-10 %",NmuPtBins,muPtLow,muPtHigh);
+			TH1D *h_muPt_cent10to30 = new TH1D("h_muPt_cent10to30","centrality 10-30 %",NmuPtBins,muPtLow,muPtHigh);
+			TH1D *h_muPt_cent30to50 = new TH1D("h_muPt_cent30to50","centrality 30-50 %",NmuPtBins,muPtLow,muPtHigh);
+			TH1D *h_muPt_cent50to90 = new TH1D("h_muPt_cent50to90","centrality 50-90 %",NmuPtBins,muPtLow,muPtHigh);
+		TH1D *h_muEta = new TH1D("h_muEta","data muon #eta",NEtaBins,etaMin,etaMax);
+			TH1D *h_muEta_cent0to10 = new TH1D("h_muEta_cent0to10","centrality 0-10 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_muEta_cent10to30 = new TH1D("h_muEta_cent10to30","centrality 10-30 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_muEta_cent30to50 = new TH1D("h_muEta_cent30to50","centrality 30-50 %",NEtaBins,etaMin,etaMax);
+			TH1D *h_muEta_cent50to90 = new TH1D("h_muEta_cent50to90","centrality 50-90 %",NEtaBins,etaMin,etaMax);
+		TH1D *h_muPhi = new TH1D("h_muPhi","data muon #phi",NPhiBins,phiMin,phiMax);
+			TH1D *h_muPhi_cent0to10 = new TH1D("h_muPhi_cent0to10","centrality 0-10 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_muPhi_cent10to30 = new TH1D("h_muPhi_cent10to30","centrality 10-30 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_muPhi_cent30to50 = new TH1D("h_muPhi_cent30to50","centrality 30-50 %",NPhiBins,phiMin,phiMax);
+			TH1D *h_muPhi_cent50to90 = new TH1D("h_muPhi_cent50to90","centrality 50-90 %",NPhiBins,phiMin,phiMax);
 
 		///////////////////////////////////////////////////////////////  CALCULATED VARIABLES  //////////////////////////////////////////////////////////////////////////////
 
-		TH1D *deltaR = new TH1D("deltaR","#Delta r",10,0,1);
-		TH1D *h_muRelPt = new TH1D("h_muRelPt","p_{T}^{#mu}",50,0,5); // all muon-jets
+		TH1D *deltaR = new TH1D("deltaR","#Delta r",200,0.0,2.0);
+		TH1D *h_muRelPt = new TH1D("h_muRelPt","muon rel pt",50,0.0,5.0); // all muon-jets
+			TH1D *h_muRelPt_cent0to10 = new TH1D("h_muRelPt_cent0to10","muon rel pt, centrality 0-10%",50,0.0,5.0);
+			TH1D *h_muRelPt_cent10to30 = new TH1D("h_muRelPt_cent10to30","muon rel pt, centrality 10-30%",50,0.0,5.0);
+			TH1D *h_muRelPt_cent30to50 = new TH1D("h_muRelPt_cent30to50","muon rel pt, centrality 30-50%",50,0.0,5.0);
+			TH1D *h_muRelPt_cent50to90 = new TH1D("h_muRelPt_cent50to90","muon rel pt, centrality 50-90%",50,0.0,5.0);
 		
 
 		///////////////////////////////////////////////////////////////  CALCULATED 2D HISTOGRAMS  ////////////////////////////////////////////////////////////////////////////
 		
-		const int numUsedRelPtBins = 50;
-		float usedRelPtEdges[numUsedRelPtBins+1] = {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 
-			3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5.0};
+		
+		// Sumw2 commands
 
-		
-		TH2D *h2_relPtJetPt = new TH2D("h2_relPtJetPt","All jets",numUsedRelPtBins,usedRelPtEdges,numUsedPtBins,usedPtEdges);
-		
-		
-
-
-		h2->Sumw2();
-		h2_MJ->Sumw2();
-		deltaR -> Sumw2();
-		h_muRelPt -> Sumw2();
-		h2_relPtJetPt->Sumw2();
-		
+		h_vz->Sumw2();
+		h_hiBin->Sumw2();
+		h_jetpt->Sumw2();
+			h_jetpt_cent0to10->Sumw2();
+			h_jetpt_cent10to30->Sumw2();
+			h_jetpt_cent30to50->Sumw2();
+			h_jetpt_cent50to90->Sumw2();
+		h_jeteta->Sumw2();
+			h_jeteta_cent0to10->Sumw2();
+			h_jeteta_cent10to30->Sumw2();
+			h_jeteta_cent30to50->Sumw2();
+			h_jeteta_cent50to90->Sumw2();
+		h_jetphi->Sumw2();
+			h_jetphi_cent0to10->Sumw2();
+			h_jetphi_cent10to30->Sumw2();
+			h_jetphi_cent30to50->Sumw2();
+			h_jetphi_cent50to90->Sumw2();
+		h_mujetpt->Sumw2();
+			h_mujetpt_cent0to10->Sumw2();
+			h_mujetpt_cent10to30->Sumw2();
+			h_mujetpt_cent30to50->Sumw2();
+			h_mujetpt_cent50to90->Sumw2();
+		h_mujeteta->Sumw2();
+			h_mujeteta_cent0to10->Sumw2();
+			h_mujeteta_cent10to30->Sumw2();
+			h_mujeteta_cent30to50->Sumw2();
+			h_mujeteta_cent50to90->Sumw2();
+		h_mujetphi->Sumw2();
+			h_mujetphi_cent0to10->Sumw2();
+			h_mujetphi_cent10to30->Sumw2();
+			h_mujetphi_cent30to50->Sumw2();
+			h_mujetphi_cent50to90->Sumw2();
+		h_muPt->Sumw2();
+			h_muPt_cent0to10->Sumw2();
+			h_muPt_cent10to30->Sumw2();
+			h_muPt_cent30to50->Sumw2();
+			h_muPt_cent50to90->Sumw2();
+		h_muEta->Sumw2();
+			h_muEta_cent0to10->Sumw2();
+			h_muEta_cent10to30->Sumw2();
+			h_muEta_cent30to50->Sumw2();
+			h_muEta_cent50to90->Sumw2();
+		h_muPhi->Sumw2();
+			h_muPhi_cent0to10->Sumw2();
+			h_muPhi_cent10to30->Sumw2();
+			h_muPhi_cent30to50->Sumw2();
+			h_muPhi_cent50to90->Sumw2();
+		deltaR->Sumw2();
+		h_muRelPt->Sumw2();
+			h_muRelPt_cent0to10->Sumw2();
+			h_muRelPt_cent10to30->Sumw2();
+			h_muRelPt_cent30to50->Sumw2();
+			h_muRelPt_cent50to90->Sumw2();
 		
 	
 	////////////////////////////////////////////////////////////////////////  CUT Values  //////////////////////////////////////////////////////////////////////////////
 
-	const double etamaxcut = 1.5; // default = 1.5
-	const double pTmaxcut = 500;
+	
 	
 	/////////////////////////////////////////////////////////////////////  LOAD DATA  /////////////////////////////////////////////////////////////////////////////
 	/*
@@ -189,8 +287,8 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 //for(int file = 1; file < 20; file++){
 	
 	//cout << "Processing file " << file << "/"<<NFiles<< endl;
-	auto f = TFile::Open("/home/clayton/Analysis/data/PbPb_5TeV_SingleMuPD_MuJetTrigger_SuperSlimSkim_21Aug2019.root");
-	//auto f = TFile::Open("/home/clayton/Analysis/data/PPData_5TeV_SingleMuPD_MuJetTrigger_SuperSlimSkim_27Aug2019.root");
+	TFile *f = TFile::Open("/home/clayton/Analysis/data/PbPb_5TeV_SingleMuPD_MuJetTrigger_SuperSlimSkim_21Aug2019.root");
+	//TFile *f = TFile::Open("/home/clayton/Analysis/data/PPData_5TeV_SingleMuPD_MuJetTrigger_SuperSlimSkim_27Aug2019.root");
 
     TTree *inp_tree = (TTree*)f->Get("mixing_tree;1");
 	Long64_t n_evts = inp_tree->GetEntriesFast();
@@ -200,9 +298,9 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 	////////////////////////////////////////////////////////////////////// RECO JETS ////////////////////////////////////////////////////////////////////
 	
 	
-	inp_tree->SetBranchAddress("pf_jtpt",&pf_jtpt);
-	inp_tree->SetBranchAddress("pf_jteta",&pf_jteta);
-	inp_tree->SetBranchAddress("pf_jtphi",&pf_jtphi);
+	inp_tree->SetBranchAddress("pf_corrpt",&jetpt); 
+	inp_tree->SetBranchAddress("pf_jteta",&jeteta);
+	inp_tree->SetBranchAddress("pf_jtphi",&jetphi);
 	
 	
 	////////////////////////////////////////////////////////////////////// MUON JETS ////////////////////////////////////////////////////////////////////
@@ -226,12 +324,9 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 	inp_tree->SetBranchAddress("hiBin",&hiBin);
 
 	//////////////////////////////////////////////////////////////////  loop variables  ///////////////////////////////////////////////////////////////////////	
-	int jeti_frac=0;
+
 	int evi = 0;
 	int evi_frac = 0;
-	double w=0;
-	
-	int nMuCount=0;
 
 	////////////////////////////////////////////////////////////////////  Event loop  //////////////////////////////////////////////////////////////////////////
 
@@ -245,39 +340,53 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
         evi_frac = 100*evi/n_evts;
         
         
-
+		
         //////////////////////////////////////////////  EVENT CUTS ////////////////////////////////////////////////
 
+		if(fabs(vz)>15.0){continue;}
+		if(hiBin > 180){continue;}
         
-
+		h_vz->Fill(vz);
+		h_hiBin->Fill(hiBin);
         
         
          
 		//////////////////////////////////////////////////////////////////  Jet loop ////////////////////////////////////////////////////////////////////////////
 		
-		for(int jetj=0; jetj < (int)pf_jteta->size(); jetj++){
+		for(int jetj=0; jetj < (int)jeteta->size(); jetj++){
 			
-			double jetPtj = pf_jtpt->at(jetj);
-			double jetEtaj = pf_jteta->at(jetj);
-			double jetPhij = pf_jtphi->at(jetj);
+			double jetPtj = jetpt->at(jetj);
+			double jetEtaj = jeteta->at(jetj);
+			double jetPhij = jetphi->at(jetj);
 
-			// convert eta to theta
-			double jetThetaj = 2*atan(exp(-jetEtaj));
-			
-			double x = pf_jteta->at(jetj);
-			double u = pf_jtpt->at(jetj);
-			
+					
 			/////////////////////////////////////  JET CUTS /////////////////////////////////////////
-			if(fabs(x)>etamaxcut || u < jetptcut || u>pTmaxcut || u==-999){continue;}
+			if(fabs(jetEtaj)>etaMax || jetPtj < ptMin || jetPtj>ptMax || jetPhij==-999){continue;}
 
-
-			h2->Fill(x,u,w);
+			h_jetpt->Fill(jetPtj);
+				if(hiBin>0 && hiBin<20){h_jetpt_cent0to10->Fill(jetPtj);}
+				if(hiBin>20 && hiBin<60){h_jetpt_cent10to30->Fill(jetPtj);}
+				if(hiBin>60 && hiBin<100){h_jetpt_cent30to50->Fill(jetPtj);}
+				if(hiBin>100 && hiBin<180){h_jetpt_cent50to90->Fill(jetPtj);}
+			h_jeteta->Fill(jetEtaj);
+				if(hiBin>0 && hiBin<20){h_jeteta_cent0to10->Fill(jetEtaj);}
+				if(hiBin>20 && hiBin<60){h_jeteta_cent10to30->Fill(jetEtaj);}
+				if(hiBin>60 && hiBin<100){h_jeteta_cent30to50->Fill(jetEtaj);}
+				if(hiBin>100 && hiBin<180){h_jeteta_cent50to90->Fill(jetEtaj);}
+			h_jetphi->Fill(jetPhij);
+				if(hiBin>0 && hiBin<20){h_jetphi_cent0to10->Fill(jetPhij);}
+				if(hiBin>20 && hiBin<60){h_jetphi_cent10to30->Fill(jetPhij);}
+				if(hiBin>60 && hiBin<100){h_jetphi_cent30to50->Fill(jetPhij);}
+				if(hiBin>100 && hiBin<180){h_jetphi_cent50to90->Fill(jetPhij);}
 			
 			//////////////////////////////////////////////////////////////////  Muon loop ////////////////////////////////////////////////////////////////////////////
 			nMu = muPt->size();
 			if(nMu==0){continue;}
-			double deltaRmin=100;
-			double muRelPtMin = 0;
+			double deltaRmin=1000000.0;
+			double muRelPtMin = 1000000.0;
+			double muJetPtMin = 1000000.0;
+			double muJetPhiMin = 1000000.0;
+			double muJetEtaMin = 1000000.0;
 			for(int mui=0; mui<(int) muPt->size();mui++){
 				if(muIsTracker->at(mui)==0 || TMath::Abs(muEta->at(mui))>2.4 || muChi2NDF->at(mui)==-99 || muChi2NDF->at(mui)>10
 					||TMath::Abs(muInnerD0->at(mui))>0.2 || TMath::Abs(muInnerDz->at(mui))>0.5 || muMuonHits->at(mui)<= 0
@@ -286,6 +395,22 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 				double muPti = muPt->at(mui);
 				double muEtai = muEta->at(mui);
 				double muPhii = muPhi->at(mui);
+
+				h_muPt->Fill(muPti);
+					if(hiBin>0 && hiBin<20){h_muPt_cent0to10->Fill(muPti);}
+					if(hiBin>20 && hiBin<60){h_muPt_cent10to30->Fill(muPti);}
+					if(hiBin>60 && hiBin<100){h_muPt_cent30to50->Fill(muPti);}
+					if(hiBin>100 && hiBin<180){h_muPt_cent50to90->Fill(muPti);}
+				h_muEta->Fill(muEtai);
+					if(hiBin>0 && hiBin<20){h_muEta_cent0to10->Fill(muEtai);}
+					if(hiBin>20 && hiBin<60){h_muEta_cent10to30->Fill(muEtai);}
+					if(hiBin>60 && hiBin<100){h_muEta_cent30to50->Fill(muEtai);}
+					if(hiBin>100 && hiBin<180){h_muEta_cent50to90->Fill(muEtai);}
+				h_muPhi->Fill(muPhii);
+					if(hiBin>0 && hiBin<20){h_muPhi_cent0to10->Fill(muPhii);}
+					if(hiBin>20 && hiBin<60){h_muPhi_cent10to30->Fill(muPhii);}
+					if(hiBin>60 && hiBin<100){h_muPhi_cent30to50->Fill(muPhii);}
+					if(hiBin>100 && hiBin<180){h_muPhi_cent50to90->Fill(muPhii);}
 
 			
 				double deltaEtaij = muEtai-jetEtaj;
@@ -296,20 +421,46 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 				if(deltaRij<deltaRmin){
 					deltaRmin=deltaRij;
 					muRelPtMin=muRelPt;
+					muJetPtMin=jetPtj;
+					muJetEtaMin=jetEtaj;
+					muJetPhiMin=jetPhij;
 					
 				}
 
 			} 
 			//////////////////////////////////////////////////////////////////  End muon loop ////////////////////////////////////////////////////////////////////////////
 	
-			deltaR->Fill(deltaRmin);
+			if(deltaRmin != 1000000.0){deltaR->Fill(deltaRmin);}
+			if(muJetPtMin != 1000000.0){
+				h_mujetpt->Fill(muJetPtMin);
+				if(hiBin>0 && hiBin<20){h_mujetpt_cent0to10->Fill(muJetPtMin);}
+				if(hiBin>20 && hiBin<60){h_mujetpt_cent10to30->Fill(muJetPtMin);}
+				if(hiBin>60 && hiBin<100){h_mujetpt_cent30to50->Fill(muJetPtMin);}
+				if(hiBin>100 && hiBin<180){h_mujetpt_cent50to90->Fill(muJetPtMin);}
+			}
+			if(muJetEtaMin != 1000000.0){
+				h_mujeteta->Fill(muJetEtaMin);
+				if(hiBin>0 && hiBin<20){h_mujeteta_cent0to10->Fill(muJetEtaMin);}
+				if(hiBin>20 && hiBin<60){h_mujeteta_cent10to30->Fill(muJetEtaMin);}
+				if(hiBin>60 && hiBin<100){h_mujeteta_cent30to50->Fill(muJetEtaMin);}
+				if(hiBin>100 && hiBin<180){h_mujeteta_cent50to90->Fill(muJetEtaMin);}
+			}
+			if(muJetPhiMin != 1000000.0){
+				h_mujetphi->Fill(muJetPhiMin);
+				if(hiBin>0 && hiBin<20){h_mujetphi_cent0to10->Fill(muJetPhiMin);}
+				if(hiBin>20 && hiBin<60){h_mujetphi_cent10to30->Fill(muJetPhiMin);}
+				if(hiBin>60 && hiBin<100){h_mujetphi_cent30to50->Fill(muJetPhiMin);}
+				if(hiBin>100 && hiBin<180){h_mujetphi_cent50to90->Fill(muJetPhiMin);}	
+			}
 			
 			if(deltaRmin<0.4){
-
-				h2_MJ->Fill(x,u,w);
+				
 				h_muRelPt->Fill(muRelPtMin);
-				h2_relPtJetPt->Fill(muRelPtMin,u,w);
-
+				if(hiBin>0 && hiBin<20){h_muRelPt_cent0to10->Fill(muRelPtMin);}
+				if(hiBin>20 && hiBin<60){h_muRelPt_cent10to30->Fill(muRelPtMin);}
+				if(hiBin>60 && hiBin<100){h_muRelPt_cent30to50->Fill(muRelPtMin);}
+				if(hiBin>100 && hiBin<180){h_muRelPt_cent50to90->Fill(muRelPtMin);}
+				
 			}
 			
 		} 
@@ -325,24 +476,65 @@ void makeDataV2(double muPtCut = 5.0, double jetptcut = 50.){
 ///////////////////////////////////////////  file creation history /////////////////////////////////////////////////////
 
 //auto wf = TFile::Open("makeDataV2_PbPb_refjets_pthat_50_muptcut_5.root","recreate");
-auto wf = TFile::Open("makeDataV2_pp_refjets_pthat_50_muptcut_5.root","recreate");
+//auto wf = TFile::Open("makeDataV2_pp_refjets_pthat_50_muptcut_5.root","recreate");
+//auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_pp_data_corrpt_muptcut_10.root","recreate");
+auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_PbPb_data_corrpt_muptcut_10.root","recreate");
 
 
-
-
-
-
-
-
-
-
-h2->Write();
-
-h2_MJ->Write();
-
+h_vz->Write();
+h_hiBin->Write();
+h_jetpt->Write();
+	h_jetpt_cent0to10->Write();
+	h_jetpt_cent10to30->Write();
+	h_jetpt_cent30to50->Write();
+	h_jetpt_cent50to90->Write();
+h_jeteta->Write();
+	h_jeteta_cent0to10->Write();
+	h_jeteta_cent10to30->Write();
+	h_jeteta_cent30to50->Write();
+	h_jeteta_cent50to90->Write();
+h_jetphi->Write();
+	h_jetphi_cent0to10->Write();
+	h_jetphi_cent10to30->Write();
+	h_jetphi_cent30to50->Write();
+	h_jetphi_cent50to90->Write();
+h_mujetpt->Write();
+	h_mujetpt_cent0to10->Write();
+	h_mujetpt_cent10to30->Write();
+	h_mujetpt_cent30to50->Write();
+	h_mujetpt_cent50to90->Write();
+h_mujeteta->Write();
+	h_mujeteta_cent0to10->Write();
+	h_mujeteta_cent10to30->Write();
+	h_mujeteta_cent30to50->Write();
+	h_mujeteta_cent50to90->Write();
+h_mujetphi->Write();
+	h_mujetphi_cent0to10->Write();
+	h_mujetphi_cent10to30->Write();
+	h_mujetphi_cent30to50->Write();
+	h_mujetphi_cent50to90->Write();
+h_muPt->Write();
+	h_muPt_cent0to10->Write();
+	h_muPt_cent10to30->Write();
+	h_muPt_cent30to50->Write();
+	h_muPt_cent50to90->Write();
+h_muEta->Write();
+	h_muEta_cent0to10->Write();
+	h_muEta_cent10to30->Write();
+	h_muEta_cent30to50->Write();
+	h_muEta_cent50to90->Write();
+h_muPhi->Write();
+	h_muPhi_cent0to10->Write();
+	h_muPhi_cent10to30->Write();
+	h_muPhi_cent30to50->Write();
+	h_muPhi_cent50to90->Write();
 deltaR->Write();
 h_muRelPt->Write();
-h2_relPtJetPt->Write();
+	h_muRelPt_cent0to10->Write();
+	h_muRelPt_cent10to30->Write();
+	h_muRelPt_cent30to50->Write();
+	h_muRelPt_cent50to90->Write();
+
 
 wf->Close();
 

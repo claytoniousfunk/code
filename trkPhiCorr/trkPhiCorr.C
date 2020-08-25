@@ -35,13 +35,14 @@ void trkPhiCorr(){
 
         /// LOAD DATA ///
         auto f =TFile::Open("/home/clayton/Analysis/skims/PP_2017MC_5TeV_MC_Skim_1.root");
+        
         auto em = new eventMap(f);
         em->isMC = 1;
         em->init();
         em->loadJet("akFlowPuCs4PFJetAnalyzer");
         em->loadTrack();
-	em -> loadGenParticle();
-	Long64_t n_evts = em->evtTree->GetEntries();
+		em -> loadGenParticle();
+		Long64_t n_evts = em->evtTree->GetEntries();
 	
 	/// DEFINE HISTOGRAMS ///
 	TH1D *h_dphi = new TH1D("h_dphi","Track dPhi",500,-1*TMath::Pi(),2*TMath::Pi());
@@ -58,7 +59,7 @@ void trkPhiCorr(){
 
 
 	
-        int jeti_frac=0;
+    int jeti_frac=0;
 	int evi = 0;
 	int evi_frac = 0;
 

@@ -60,17 +60,20 @@
 //TFile *f = TFile::Open("/home/clayton/Analysis/code/makeData/V8/rootFiles/makeDataV8_recojets_pthat_30_muptcut_5.root");
 //TFile *f_data = TFile::Open("/home/clayton/Analysis/code/makeData/V8/rootFiles/makeDataV8_recojets_pthat_30_muptcut_5.root");
 
-TFile *f = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_recojets_pthat_30_muptcut_5.root");
-TFile *f_data = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_recojets_pthat_30_muptcut_5.root");
+//TFile *f = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_recojets_pthat_30_muptcut_5.root");
+//TFile *f_data = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_recojets_pthat_30_muptcut_5.root");
+
+TFile *f = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_refjets_pthat_30_muptcut_5.root");
+TFile *f_data = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_refjets_pthat_30_muptcut_5.root");
 
 
 
 TH1D *h_muRelPt_centReg1, *h_muRelPt_centReg2, *h_muRelPt_centReg3, *h_muRelPt_centReg4;
-TH1D *h_muRelPt_g_centReg1, *h_muRelPt_lq_centReg1, *h_muRelPt_sall_centReg1, *h_muRelPt_ball_centReg1, *h_muRelPt_call_centReg1;
-TH1D *h_muRelPt_g_centReg2, *h_muRelPt_lq_centReg2, *h_muRelPt_sall_centReg2, *h_muRelPt_ball_centReg2, *h_muRelPt_call_centReg2;
-TH1D *h_muRelPt_g_centReg3, *h_muRelPt_lq_centReg3, *h_muRelPt_sall_centReg3, *h_muRelPt_ball_centReg3, *h_muRelPt_call_centReg3;
-TH1D *h_muRelPt_g_centReg4, *h_muRelPt_lq_centReg4, *h_muRelPt_sall_centReg4, *h_muRelPt_ball_centReg4, *h_muRelPt_call_centReg4;
-TH1D *h_muRelPt, *h_muRelPt_g, *h_muRelPt_call, *h_muRelPt_ball, *h_muRelPt_sall, *h_muRelPt_lq, *h_muRelPt_q, *h_muRelPt_ee;
+TH1D *h_muRelPt_g_centReg1, *h_muRelPt_lq_centReg1, *h_muRelPt_sall_centReg1, *h_muRelPt_ball_centReg1, *h_muRelPt_call_centReg1, *h_muRelPt_ghost_centReg1;
+TH1D *h_muRelPt_g_centReg2, *h_muRelPt_lq_centReg2, *h_muRelPt_sall_centReg2, *h_muRelPt_ball_centReg2, *h_muRelPt_call_centReg2, *h_muRelPt_ghost_centReg2;
+TH1D *h_muRelPt_g_centReg3, *h_muRelPt_lq_centReg3, *h_muRelPt_sall_centReg3, *h_muRelPt_ball_centReg3, *h_muRelPt_call_centReg3, *h_muRelPt_ghost_centReg3;
+TH1D *h_muRelPt_g_centReg4, *h_muRelPt_lq_centReg4, *h_muRelPt_sall_centReg4, *h_muRelPt_ball_centReg4, *h_muRelPt_call_centReg4, *h_muRelPt_ghost_centReg4;
+TH1D *h_muRelPt, *h_muRelPt_g, *h_muRelPt_call, *h_muRelPt_ball, *h_muRelPt_sall, *h_muRelPt_lq, *h_muRelPt_q, *h_muRelPt_ee, *h_muRelPt_ghost;
 
 
 double func_temp_2(double *x, double *par){
@@ -92,6 +95,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 	f_data->GetObject("h_muRelPt_sall_centReg1",h_muRelPt_sall_centReg1);
 	f_data->GetObject("h_muRelPt_ball_centReg1",h_muRelPt_ball_centReg1);
 	f_data->GetObject("h_muRelPt_call_centReg1",h_muRelPt_call_centReg1);
+	f_data->GetObject("h_muRelPt_ghost_centReg1",h_muRelPt_ghost_centReg1);
 
 
 	f_data->GetObject("h_muRelPt_centReg2",h_muRelPt_centReg2);
@@ -100,6 +104,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 	f_data->GetObject("h_muRelPt_sall_centReg2",h_muRelPt_sall_centReg2);
 	f_data->GetObject("h_muRelPt_ball_centReg2",h_muRelPt_ball_centReg2);
 	f_data->GetObject("h_muRelPt_call_centReg2",h_muRelPt_call_centReg2);
+	f_data->GetObject("h_muRelPt_ghost_centReg2",h_muRelPt_ghost_centReg2);
 
 
 	f_data->GetObject("h_muRelPt_centReg3",h_muRelPt_centReg3);
@@ -108,6 +113,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 	f_data->GetObject("h_muRelPt_sall_centReg3",h_muRelPt_sall_centReg3);
 	f_data->GetObject("h_muRelPt_ball_centReg3",h_muRelPt_ball_centReg3);
 	f_data->GetObject("h_muRelPt_call_centReg3",h_muRelPt_call_centReg3);
+	f_data->GetObject("h_muRelPt_ghost_centReg3",h_muRelPt_ghost_centReg3);
 
 
 	f_data->GetObject("h_muRelPt_centReg4",h_muRelPt_centReg4);
@@ -116,6 +122,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 	f_data->GetObject("h_muRelPt_sall_centReg4",h_muRelPt_sall_centReg4);
 	f_data->GetObject("h_muRelPt_ball_centReg4",h_muRelPt_ball_centReg4);
 	f_data->GetObject("h_muRelPt_call_centReg4",h_muRelPt_call_centReg4);
+	f_data->GetObject("h_muRelPt_ghost_centReg4",h_muRelPt_ghost_centReg4);
 
 
 
@@ -130,6 +137,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 			h_muRelPt_sall = (TH1D*) h_muRelPt_sall_centReg1->Clone("h_muRelPt_sall");
 			h_muRelPt_ball = (TH1D*) h_muRelPt_ball_centReg1->Clone("h_muRelPt_ball");
 			h_muRelPt_call = (TH1D*) h_muRelPt_call_centReg1->Clone("h_muRelPt_call");
+			h_muRelPt_ghost = (TH1D*) h_muRelPt_ghost_centReg1->Clone("h_muRelPt_ghost");
 		}
 		if(centReg==2){
 			h_muRelPt = (TH1D*) h_muRelPt_centReg2->Clone("h_muRelPt");
@@ -138,6 +146,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 			h_muRelPt_sall = (TH1D*) h_muRelPt_sall_centReg2->Clone("h_muRelPt_sall");
 			h_muRelPt_ball = (TH1D*) h_muRelPt_ball_centReg2->Clone("h_muRelPt_ball");
 			h_muRelPt_call = (TH1D*) h_muRelPt_call_centReg2->Clone("h_muRelPt_call");
+			h_muRelPt_ghost = (TH1D*) h_muRelPt_ghost_centReg2->Clone("h_muRelPt_ghost");
 		}
 		if(centReg==3){
 			h_muRelPt = (TH1D*) h_muRelPt_centReg3->Clone("h_muRelPt");
@@ -146,6 +155,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 			h_muRelPt_sall = (TH1D*) h_muRelPt_sall_centReg3->Clone("h_muRelPt_sall");
 			h_muRelPt_ball = (TH1D*) h_muRelPt_ball_centReg3->Clone("h_muRelPt_ball");
 			h_muRelPt_call = (TH1D*) h_muRelPt_call_centReg3->Clone("h_muRelPt_call");
+			h_muRelPt_ghost = (TH1D*) h_muRelPt_ghost_centReg3->Clone("h_muRelPt_ghost");
 		}
 		if(centReg==4){
 			h_muRelPt = (TH1D*) h_muRelPt_centReg4->Clone("h_muRelPt");
@@ -154,6 +164,7 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 			h_muRelPt_sall = (TH1D*) h_muRelPt_sall_centReg4->Clone("h_muRelPt_sall");
 			h_muRelPt_ball = (TH1D*) h_muRelPt_ball_centReg4->Clone("h_muRelPt_ball");
 			h_muRelPt_call = (TH1D*) h_muRelPt_call_centReg4->Clone("h_muRelPt_call");
+			h_muRelPt_ghost = (TH1D*) h_muRelPt_ghost_centReg4->Clone("h_muRelPt_ghost");
 		}
 
 
@@ -166,6 +177,8 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 		h_muRelPt_ee->Scale(1./h_muRelPt_ee->Integral());
 		h_muRelPt_ball->Scale(1./h_muRelPt_ball->Integral());
 		h_muRelPt_call->Scale(1./h_muRelPt_call->Integral());
+		// subtract the ghosts
+		h_muRelPt->Add(h_muRelPt_ghost,-1.0);
 		// normalize the data
 		h_muRelPt->Scale(1./h_muRelPt->Integral());
 		// define the stack
@@ -274,10 +287,10 @@ void templateFitCentralityRegions(bool isStack = 1, int centReg = 1){
 			legend->AddEntry(func,"fit");
 			legend->Draw();
 
-			if(centReg==1){h_muRelPt->SetTitle("0-10");}
-			if(centReg==2){h_muRelPt->SetTitle("10-30");}
-			if(centReg==3){h_muRelPt->SetTitle("30-50");}
-			if(centReg==4){h_muRelPt->SetTitle("50-90");}
+			if(centReg==1){h_stack->SetTitle("0-10 % centrality");}
+			if(centReg==2){h_stack->SetTitle("10-30 % centrality");}
+			if(centReg==3){h_stack->SetTitle("30-50 % centrality");}
+			if(centReg==4){h_stack->SetTitle("50-90 % centrality");}
 
 		}
 

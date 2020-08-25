@@ -235,6 +235,7 @@ for(int file = 1; file < NFiles+1; file++){
 		em->getEvent(evi);
 		//event cuts
 		if(fabs(em->vz)>15.0){continue;}
+		if(em->pthat<30.0){continue;}
 
 		h_vz->Fill(em->vz);
 		h_pthat->Fill(em->pthat);
@@ -244,87 +245,66 @@ for(int file = 1; file < NFiles+1; file++){
                  }
         evi_frac = 100*evi/NEvents;
 		//cout << "Number of jets = " << em->njet << endl;
+        //jet cuts
+        double jetEtaCut = 1.5;
+		double jetPtCut = 50.0;
+		//reco jet loop
 		for(int jeti = 0; jeti < em->njet; jeti++){
 			//cout << "reco jet pt_" << jeti << " = " << em->jetpt[jeti] <<"  ////  " << "gen jet pt_"<<jeti<<" = "<<em->genjetpt[jeti]<<endl;
-			//jet cuts
-			double jetEtaCut = 1.5;
-			double jetPtCut = 50.0;
+			
 			if(fabs(em->jeteta[jeti])>jetEtaCut){continue;}
 			if(em->jetpt[jeti]<jetPtCut){continue;}
-			float ref_multiplier = 0.35;
-			if(em->pthat < ref_multiplier*em->ref_jetpt[jeti]){continue;}
+			
+			//float ref_multiplier = 0.35;
+			//if(em->pthat < ref_multiplier*em->ref_jetpt[jeti]){continue;}
+			
 			h_jetpt->Fill(em->jetpt[jeti],em->weight);
 			h_jeteta->Fill(em->jeteta[jeti],em->weight);
 			h_jetphi->Fill(em->jetphi[jeti],em->weight);
-			h_genjetpt->Fill(em->genjetpt[jeti],em->weight);
-			h_genjeteta->Fill(em->genjeteta[jeti],em->weight);
-			h_genjetphi->Fill(em->genjetphi[jeti],em->weight);
+			
 			if(em->partonFlavor[jeti]==4){
 					h_jetpt_c->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_c->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_c->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_c->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_c->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_c->Fill(em->genjetphi[jeti],em->weight);
 			}
 			else if(em->partonFlavor[jeti]==5){
 					h_jetpt_b->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_b->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_b->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_b->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_b->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_b->Fill(em->genjetphi[jeti],em->weight);
 			}
 			else{
 				if(em->hadronFlavor[jeti]==1 || em->hadronFlavor[jeti]==-1){
 					h_jetpt_uds->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_uds->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_uds->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_uds->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_uds->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_uds->Fill(em->genjetphi[jeti],em->weight);
 				}
 				if(em->hadronFlavor[jeti]==2 || em->hadronFlavor[jeti]==-2){
 					h_jetpt_uds->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_uds->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_uds->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_uds->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_uds->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_uds->Fill(em->genjetphi[jeti],em->weight);
 				}
 				if(em->hadronFlavor[jeti]==3 || em->hadronFlavor[jeti]==-3){
 					h_jetpt_uds->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_uds->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_uds->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_uds->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_uds->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_uds->Fill(em->genjetphi[jeti],em->weight);
 				}
 				if(em->hadronFlavor[jeti]==4 || em->hadronFlavor[jeti]==-4){
 					h_jetpt_c->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_c->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_c->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_c->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_c->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_c->Fill(em->genjetphi[jeti],em->weight);
 				}
 				if(em->hadronFlavor[jeti]==5 || em->hadronFlavor[jeti]==-5){
 					h_jetpt_b->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_b->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_b->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_b->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_b->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_b->Fill(em->genjetphi[jeti],em->weight);
 				}
 				if(em->hadronFlavor[jeti]==21){
 					h_jetpt_g->Fill(em->jetpt[jeti],em->weight);
 					h_jeteta_g->Fill(em->jeteta[jeti],em->weight);
 					h_jetphi_g->Fill(em->jetphi[jeti],em->weight);
-					h_genjetpt_g->Fill(em->genjetpt[jeti],em->weight);
-					h_genjeteta_g->Fill(em->genjeteta[jeti],em->weight);
-					h_genjetphi_g->Fill(em->genjetphi[jeti],em->weight);
 				}
 			}
+			// muon loop
 			for(int mui = 0; mui< em->nMu; mui++){
 				double muPtCut = 5.0;
 				// muon cuts
@@ -391,10 +371,26 @@ for(int file = 1; file < NFiles+1; file++){
 					}
 				}
 
-			}
+			} // end muon loop
 
 
-		}
+		} // end reco jet loop
+		// gen jet loop
+		for(int jetj = 0; jetj < em->ngj; jetj++){
+			//cout << "reco jet pt_" << jeti << " = " << em->jetpt[jeti] <<"  ////  " << "gen jet pt_"<<jeti<<" = "<<em->genjetpt[jeti]<<endl;
+			
+			if(fabs(em->genjeteta[jetj])>jetEtaCut){continue;}
+			if(em->genjetpt[jetj]<jetPtCut){continue;}
+			
+			//float ref_multiplier = 0.35;
+			//if(em->pthat < ref_multiplier*em->ref_jetpt[jeti]){continue;}
+			
+			h_genjetpt->Fill(em->genjetpt[jetj],em->weight);
+			h_genjeteta->Fill(em->genjeteta[jetj],em->weight);
+			h_genjetphi->Fill(em->genjetphi[jetj],em->weight);
+
+
+		} // end gen jet loop
 
 	} // end event loop
 

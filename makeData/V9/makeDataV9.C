@@ -199,41 +199,46 @@ void makeDataV9(bool isReco = 0, double muPtCut = 5.0){
 
 
 		TH1D *deltaR = new TH1D("deltaR","#Delta r",10,0,1);
-		TH1D *h_muRelPt = new TH1D("h_muRelPt","p_{T}^{#mu}",NRelPtBins,relPtMin,relPtMax); // all muon-jets
-		TH1D *h_muRelPt_g = new TH1D("h_muRelPt_g","p_{T}^{#mu,g}",NRelPtBins,relPtMin,relPtMax); // all gluon muon-jets
-		TH1D *h_muRelPt_lq = new TH1D("h_muRelPt_lq","p_{T}^{#mu,light}",NRelPtBins,relPtMin,relPtMax); // all light-quark muon-jets
-		TH1D *h_muRelPt_sall = new TH1D("h_muRelPt_sall","p_{T}^{#mu,s}",NRelPtBins,relPtMin,relPtMax); // all s muon-jets
-		TH1D *h_muRelPt_call = new TH1D("h_muRelPt_call","p_{T}^{#mu,c}",NRelPtBins,relPtMin,relPtMax); // all c muon-jets
-		TH1D *h_muRelPt_ball = new TH1D("h_muRelPt_ball","p_{T}^{#mu,b}",NRelPtBins,relPtMin,relPtMax); // all b muon-jets
+		TH1D *h_muRelPt = new TH1D("h_muRelPt","muon rel pt",NRelPtBins,relPtMin,relPtMax); // all muon-jets
+		TH1D *h_muRelPt_g = new TH1D("h_muRelPt_g","g jets: muon rel pt",NRelPtBins,relPtMin,relPtMax); // all gluon muon-jets
+		TH1D *h_muRelPt_lq = new TH1D("h_muRelPt_lq","u & d jets: muon rel pt",NRelPtBins,relPtMin,relPtMax); // all light-quark muon-jets
+		TH1D *h_muRelPt_sall = new TH1D("h_muRelPt_sall","s jets: muon rel pt",NRelPtBins,relPtMin,relPtMax); // all s muon-jets
+		TH1D *h_muRelPt_call = new TH1D("h_muRelPt_call","c jets: muon rel pt",NRelPtBins,relPtMin,relPtMax); // all c muon-jets
+		TH1D *h_muRelPt_ball = new TH1D("h_muRelPt_ball","b jets: muon rel pt",NRelPtBins,relPtMin,relPtMax); // all b muon-jets
+		TH1D *h_muRelPt_ghost = new TH1D("h_muRelPt_ghost","ghost jets: muon rel pt",NRelPtBins,relPtMin,relPtMax); // all ghost muon-jets
 
 		// centrality dependence
-		TH1D *h_muRelPt_centReg1 = new TH1D("h_muRelPt_centReg1","",NRelPtBins,relPtMin,relPtMax); // 0-10 % centrality
-		TH1D *h_muRelPt_g_centReg1 = new TH1D("h_muRelPt_g_centReg1","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_lq_centReg1 = new TH1D("h_muRelPt_lq_centReg1","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_sall_centReg1 = new TH1D("h_muRelPt_sall_centReg1","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_call_centReg1 = new TH1D("h_muRelPt_call_centReg1","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_ball_centReg1 = new TH1D("h_muRelPt_ball_centReg1","",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_centReg1 = new TH1D("h_muRelPt_centReg1","muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax); // 0-10 % centrality
+		TH1D *h_muRelPt_g_centReg1 = new TH1D("h_muRelPt_g_centReg1","g jets: muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_lq_centReg1 = new TH1D("h_muRelPt_lq_centReg1","u&d jets: muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_sall_centReg1 = new TH1D("h_muRelPt_sall_centReg1","s jets: muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_call_centReg1 = new TH1D("h_muRelPt_call_centReg1","c jets: muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_ball_centReg1 = new TH1D("h_muRelPt_ball_centReg1","b jets: muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_ghost_centReg1 = new TH1D("h_muRelPt_ghost_centReg1","ghost jets: muon rel pt, 0-10% centrality",NRelPtBins,relPtMin,relPtMax); 
 
-		TH1D *h_muRelPt_centReg2 = new TH1D("h_muRelPt_centReg2","",NRelPtBins,relPtMin,relPtMax); // 10-30 % centrality
-		TH1D *h_muRelPt_g_centReg2 = new TH1D("h_muRelPt_g_centReg2","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_lq_centReg2 = new TH1D("h_muRelPt_lq_centReg2","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_sall_centReg2 = new TH1D("h_muRelPt_sall_centReg2","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_call_centReg2 = new TH1D("h_muRelPt_call_centReg2","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_ball_centReg2 = new TH1D("h_muRelPt_ball_centReg2","",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_centReg2 = new TH1D("h_muRelPt_centReg2","muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax); // 10-30 % centrality
+		TH1D *h_muRelPt_g_centReg2 = new TH1D("h_muRelPt_g_centReg2","g jets: muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_lq_centReg2 = new TH1D("h_muRelPt_lq_centReg2","u&d jets: muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_sall_centReg2 = new TH1D("h_muRelPt_sall_centReg2","s jets: muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_call_centReg2 = new TH1D("h_muRelPt_call_centReg2","c jets: muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_ball_centReg2 = new TH1D("h_muRelPt_ball_centReg2","b jets: muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_ghost_centReg2 = new TH1D("h_muRelPt_ghost_centReg2","ghost jets: muon rel pt, 10-30% centrality",NRelPtBins,relPtMin,relPtMax); 
 
-		TH1D *h_muRelPt_centReg3 = new TH1D("h_muRelPt_centReg3","",NRelPtBins,relPtMin,relPtMax); // 30-50 % centrality
-		TH1D *h_muRelPt_g_centReg3 = new TH1D("h_muRelPt_g_centReg3","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_lq_centReg3 = new TH1D("h_muRelPt_lq_centReg3","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_sall_centReg3 = new TH1D("h_muRelPt_sall_centReg3","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_call_centReg3 = new TH1D("h_muRelPt_call_centReg3","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_ball_centReg3 = new TH1D("h_muRelPt_ball_centReg3","",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_centReg3 = new TH1D("h_muRelPt_centReg3","muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax); // 30-50 % centrality
+		TH1D *h_muRelPt_g_centReg3 = new TH1D("h_muRelPt_g_centReg3","g jets: muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_lq_centReg3 = new TH1D("h_muRelPt_lq_centReg3","ud jets: muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_sall_centReg3 = new TH1D("h_muRelPt_sall_centReg3","s jets: muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_call_centReg3 = new TH1D("h_muRelPt_call_centReg3","c jets: muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_ball_centReg3 = new TH1D("h_muRelPt_ball_centReg3","b jets: muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_ghost_centReg3 = new TH1D("h_muRelPt_ghost_centReg3","ghost jets: muon rel pt, 30-50% centrality",NRelPtBins,relPtMin,relPtMax);
 
-		TH1D *h_muRelPt_centReg4 = new TH1D("h_muRelPt_centReg4","",NRelPtBins,relPtMin,relPtMax); // 50-90 % centrality
-		TH1D *h_muRelPt_g_centReg4 = new TH1D("h_muRelPt_g_centReg4","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_lq_centReg4 = new TH1D("h_muRelPt_lq_centReg4","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_sall_centReg4 = new TH1D("h_muRelPt_sall_centReg4","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_call_centReg4 = new TH1D("h_muRelPt_call_centReg4","",NRelPtBins,relPtMin,relPtMax); 
-		TH1D *h_muRelPt_ball_centReg4 = new TH1D("h_muRelPt_ball_centReg4","",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_centReg4 = new TH1D("h_muRelPt_centReg4","muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax); // 50-90 % centrality
+		TH1D *h_muRelPt_g_centReg4 = new TH1D("h_muRelPt_g_centReg4","g jets: muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_lq_centReg4 = new TH1D("h_muRelPt_lq_centReg4","ud jets: muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_sall_centReg4 = new TH1D("h_muRelPt_sall_centReg4","s jets: muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_call_centReg4 = new TH1D("h_muRelPt_call_centReg4","c jets: muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax); 
+		TH1D *h_muRelPt_ball_centReg4 = new TH1D("h_muRelPt_ball_centReg4","b jets: muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax);
+		TH1D *h_muRelPt_ghost_centReg4 = new TH1D("h_muRelPt_ghost_centReg4","ghost jets: muon rel pt, 50-90% centrality",NRelPtBins,relPtMin,relPtMax);
 
 
 		///////////////////////////////////////////////////////////////  CALCULATED 2D HISTOGRAMS  ////////////////////////////////////////////////////////////////////////////
@@ -319,6 +324,39 @@ void makeDataV9(bool isReco = 0, double muPtCut = 5.0){
 		h_muRelPt_sall -> Sumw2();
 		h_muRelPt_ball -> Sumw2();
 		h_muRelPt_call -> Sumw2();
+		h_muRelPt_ghost->Sumw2();
+
+		h_muRelPt_centReg1 -> Sumw2();
+		h_muRelPt_g_centReg1 -> Sumw2();
+		h_muRelPt_lq_centReg1 -> Sumw2();
+		h_muRelPt_sall_centReg1 -> Sumw2();
+		h_muRelPt_ball_centReg1 -> Sumw2();
+		h_muRelPt_call_centReg1 -> Sumw2();
+		h_muRelPt_ghost_centReg1->Sumw2();
+
+		h_muRelPt_centReg2 -> Sumw2();
+		h_muRelPt_g_centReg2 -> Sumw2();
+		h_muRelPt_lq_centReg2 -> Sumw2();
+		h_muRelPt_sall_centReg2 -> Sumw2();
+		h_muRelPt_ball_centReg2 -> Sumw2();
+		h_muRelPt_call_centReg2 -> Sumw2();
+		h_muRelPt_ghost_centReg2->Sumw2();
+
+		h_muRelPt_centReg3 -> Sumw2();
+		h_muRelPt_g_centReg3 -> Sumw2();
+		h_muRelPt_lq_centReg3 -> Sumw2();
+		h_muRelPt_sall_centReg3 -> Sumw2();
+		h_muRelPt_ball_centReg3 -> Sumw2();
+		h_muRelPt_call_centReg3 -> Sumw2();
+		h_muRelPt_ghost_centReg3->Sumw2();
+
+		h_muRelPt_centReg4 -> Sumw2();
+		h_muRelPt_g_centReg4 -> Sumw2();
+		h_muRelPt_lq_centReg4 -> Sumw2();
+		h_muRelPt_sall_centReg4 -> Sumw2();
+		h_muRelPt_ball_centReg4 -> Sumw2();
+		h_muRelPt_call_centReg4 -> Sumw2();
+		h_muRelPt_ghost_centReg4->Sumw2();
 		
 		h2_relPtJetPt->Sumw2();
 		h2_relPtJetPt_g->Sumw2();
@@ -351,7 +389,7 @@ void makeDataV9(bool isReco = 0, double muPtCut = 5.0){
 	int NFiles = 0;
 	
 	struct dirent *de;  // Pointer for directory entry 
-	DIR *dr = opendir("/home/clayton/Analysis/skims5/0000");
+	DIR *dr = opendir("/home/clayton/Analysis/data/skims5/0000");
 
    	if (dr == NULL)  // opendir returns NULL if couldn't open directory 
     	{ 
@@ -379,7 +417,7 @@ for(int file = 1; file < NFiles+1; file++){
 //for(int file = 1; file < 20; file++){
 	if(file==147 || file==179 || file==184 || file==203 || file==238 || file==3 || file==314 || file==327 || file==360){continue;} // missing these root files [skims5]
 	cout << "Processing file " << file << "/"<<NFiles<< endl;
-	auto f = TFile::Open(Form("/home/clayton/Analysis/data/skims5/0000/HydJet_%d.root",file));
+	TFile *f = TFile::Open(Form("/home/clayton/Analysis/data/skims5/0000/HydJet_%d.root",file));
 
     TTree *inp_tree = (TTree*)f->Get("jet_tree;1");
 	Long64_t n_evts = inp_tree->GetEntriesFast();
@@ -598,7 +636,7 @@ for(int file = 1; file < NFiles+1; file++){
 					h2_call_MJ->Fill(x,u,w); h_muRelPt_call->Fill(muRelPtMin);
 				}
 				else{
-					if(y==0){h2_other_MJ -> Fill(x,u,w); }
+					if(y==0){h2_other_MJ -> Fill(x,u,w); h_muRelPt_ghost->Fill(muRelPtMin);}
 					if(y==1){h2_d_MJ->Fill(x,u,w); h2_lq_MJ->Fill(x,u,w); h2_dall_MJ->Fill(x,u,w); h2_ud_MJ->Fill(x,u,w); h_muRelPt_lq->Fill(muRelPtMin);}
 					if(y==2){h2_u_MJ->Fill(x,u,w); h2_lq_MJ->Fill(x,u,w); h2_uall_MJ->Fill(x,u,w); h2_ud_MJ->Fill(x,u,w); h_muRelPt_lq->Fill(muRelPtMin);}
 					if(y==3){h2_s_MJ->Fill(x,u,w); h2_hq_MJ->Fill(x,u,w); h2_sall_MJ->Fill(x,u,w); h_muRelPt_sall->Fill(muRelPtMin);}
@@ -614,39 +652,73 @@ for(int file = 1; file < NFiles+1; file++){
 					
 				
 
-				h2_MJ->Fill(x,u,w);
-				h_muRelPt->Fill(muRelPtMin);
 				if(hiBin>0 && hiBin<20) {
 					h_muRelPt_centReg1->Fill(muRelPtMin);
-					if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg1->Fill(muRelPtMin);}
-					if(abs(y)==3){h_muRelPt_sall_centReg1->Fill(muRelPtMin);}
-					if(z==4 || abs(y)==4){h_muRelPt_call_centReg1->Fill(muRelPtMin);}
-					if(z==5 || abs(y)==5){h_muRelPt_ball_centReg1->Fill(muRelPtMin);}
-					if(y==21){h_muRelPt_g_centReg1->Fill(muRelPtMin);}
+					if(z==4){
+						h_muRelPt_call_centReg1->Fill(muRelPtMin);
+					}
+					else if(z==5){
+						h_muRelPt_ball_centReg1->Fill(muRelPtMin);
+					}
+					else{
+						if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg1->Fill(muRelPtMin);}
+						if(abs(y)==3){h_muRelPt_sall_centReg1->Fill(muRelPtMin);}
+						if(z==4 || abs(y)==4){h_muRelPt_call_centReg1->Fill(muRelPtMin);}
+						if(z==5 || abs(y)==5){h_muRelPt_ball_centReg1->Fill(muRelPtMin);}
+						if(y==21){h_muRelPt_g_centReg1->Fill(muRelPtMin);}
+						if(y==0){h_muRelPt_ghost_centReg1->Fill(muRelPtMin);}
+					}
 				}
 				if(hiBin>20 && hiBin<60){
 					h_muRelPt_centReg2->Fill(muRelPtMin);
-					if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg2->Fill(muRelPtMin);}
-					if(abs(y)==3){h_muRelPt_sall_centReg2->Fill(muRelPtMin);}
-					if(z==4 || abs(y)==4){h_muRelPt_call_centReg2->Fill(muRelPtMin);}
-					if(z==5 || abs(y)==5){h_muRelPt_ball_centReg2->Fill(muRelPtMin);}
-					if(y==21){h_muRelPt_g_centReg2->Fill(muRelPtMin);}
-				} 
+					if(z==4){
+						h_muRelPt_call_centReg2->Fill(muRelPtMin);
+					}
+					else if(z==5){
+						h_muRelPt_ball_centReg2->Fill(muRelPtMin);
+					}
+					else{
+						if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg2->Fill(muRelPtMin);}
+						if(abs(y)==3){h_muRelPt_sall_centReg2->Fill(muRelPtMin);}
+						if(z==4 || abs(y)==4){h_muRelPt_call_centReg2->Fill(muRelPtMin);}
+						if(z==5 || abs(y)==5){h_muRelPt_ball_centReg2->Fill(muRelPtMin);}
+						if(y==21){h_muRelPt_g_centReg2->Fill(muRelPtMin);}
+						if(y==0){h_muRelPt_ghost_centReg2->Fill(muRelPtMin);}
+					}
+				}
 				if(hiBin>60 && hiBin<100){
 					h_muRelPt_centReg3->Fill(muRelPtMin);
-					if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg3->Fill(muRelPtMin);}
-					if(abs(y)==3){h_muRelPt_sall_centReg3->Fill(muRelPtMin);}
-					if(z==4 || abs(y)==4){h_muRelPt_call_centReg3->Fill(muRelPtMin);}
-					if(z==5 || abs(y)==5){h_muRelPt_ball_centReg3->Fill(muRelPtMin);}
-					if(y==21){h_muRelPt_g_centReg3->Fill(muRelPtMin);}
+					if(z==4){
+						h_muRelPt_call_centReg3->Fill(muRelPtMin);
+					}
+					else if(z==5){
+						h_muRelPt_ball_centReg3->Fill(muRelPtMin);
+					}
+					else{
+						if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg3->Fill(muRelPtMin);}
+						if(abs(y)==3){h_muRelPt_sall_centReg3->Fill(muRelPtMin);}
+						if(z==4 || abs(y)==4){h_muRelPt_call_centReg3->Fill(muRelPtMin);}
+						if(z==5 || abs(y)==5){h_muRelPt_ball_centReg3->Fill(muRelPtMin);}
+						if(y==21){h_muRelPt_g_centReg3->Fill(muRelPtMin);}
+						if(y==0){h_muRelPt_ghost_centReg3->Fill(muRelPtMin);}
+					}
 				} 
 				if(hiBin>100 && hiBin<180){
 					h_muRelPt_centReg4->Fill(muRelPtMin);
-					if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg4->Fill(muRelPtMin);}
-					if(abs(y)==3){h_muRelPt_sall_centReg4->Fill(muRelPtMin);}
-					if(z==4 || abs(y)==4){h_muRelPt_call_centReg4->Fill(muRelPtMin);}
-					if(z==5 || abs(y)==5){h_muRelPt_ball_centReg4->Fill(muRelPtMin);}
-					if(y==21){h_muRelPt_g_centReg4->Fill(muRelPtMin);}
+					if(z==4){
+						h_muRelPt_call_centReg4->Fill(muRelPtMin);
+					}
+					else if(z==5){
+						h_muRelPt_ball_centReg4->Fill(muRelPtMin);
+					}
+					else{
+						if(abs(y)==1 || abs(y)==2){h_muRelPt_lq_centReg4->Fill(muRelPtMin);}
+						if(abs(y)==3){h_muRelPt_sall_centReg4->Fill(muRelPtMin);}
+						if(z==4 || abs(y)==4){h_muRelPt_call_centReg4->Fill(muRelPtMin);}
+						if(z==5 || abs(y)==5){h_muRelPt_ball_centReg4->Fill(muRelPtMin);}
+						if(y==21){h_muRelPt_g_centReg4->Fill(muRelPtMin);}
+						if(y==0){h_muRelPt_ghost_centReg4->Fill(muRelPtMin);}
+					}
 				}
 				
 				h2_relPtJetPt->Fill(muRelPtMin,u,w);
@@ -664,7 +736,7 @@ for(int file = 1; file < NFiles+1; file++){
 		
 	} 
 	//////////////////////////////////////////////////////////////////  End event loop ////////////////////////////////////////////////////////////////////////////
-
+delete f;
 }
 /////////////////////////////////////////////////////////////////////  End file loop /////////////////////////////////////////////////////////////////////////////
 
@@ -712,8 +784,8 @@ for(int file = 1; file < NFiles+1; file++){
 //auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V8/rootFiles/makeDataV8_recojets_pthat_30_muptcut_5.root","recreate");
 
 // change to version 9
-//auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_refjets_pthat_30_muptcut_5.root","recreate");
-auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_recojets_pthat_30_muptcut_5.root","recreate");
+auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_refjets_pthat_30_muptcut_5.root","recreate");
+//auto wf = TFile::Open("/home/clayton/Analysis/code/makeData/V9/rootFiles/makeDataV9_recojets_pthat_30_muptcut_5.root","recreate");
 
 h2->Write();
 h2_d->Write();
@@ -768,6 +840,7 @@ h_muRelPt_lq->Write();
 h_muRelPt_sall->Write();
 h_muRelPt_call->Write();
 h_muRelPt_ball->Write();
+h_muRelPt_ghost->Write();
 h2_relPtJetPt->Write();
 h2_relPtJetPt_g->Write();
 h2_relPtJetPt_lq->Write();
@@ -787,6 +860,7 @@ h_muRelPt_lq_centReg1->Write();
 h_muRelPt_sall_centReg1->Write();
 h_muRelPt_ball_centReg1->Write();
 h_muRelPt_call_centReg1->Write();
+h_muRelPt_ghost_centReg1->Write();
 
 h_muRelPt_centReg2->Write();
 h_muRelPt_g_centReg2->Write();
@@ -794,6 +868,7 @@ h_muRelPt_lq_centReg2->Write();
 h_muRelPt_sall_centReg2->Write();
 h_muRelPt_ball_centReg2->Write();
 h_muRelPt_call_centReg2->Write();
+h_muRelPt_ghost_centReg2->Write();
 
 h_muRelPt_centReg3->Write();
 h_muRelPt_g_centReg3->Write();
@@ -801,6 +876,7 @@ h_muRelPt_lq_centReg3->Write();
 h_muRelPt_sall_centReg3->Write();
 h_muRelPt_ball_centReg3->Write();
 h_muRelPt_call_centReg3->Write();
+h_muRelPt_ghost_centReg3->Write();
 
 h_muRelPt_centReg4->Write();
 h_muRelPt_g_centReg4->Write();
@@ -808,6 +884,7 @@ h_muRelPt_lq_centReg4->Write();
 h_muRelPt_sall_centReg4->Write();
 h_muRelPt_ball_centReg4->Write();
 h_muRelPt_call_centReg4->Write();
+h_muRelPt_ghost_centReg4->Write();
 
 h_weight->Write();
 h2_jetPtPthatWeight->Write();

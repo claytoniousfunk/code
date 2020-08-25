@@ -170,8 +170,8 @@ void PP_pythia_skim(bool doCrab=0, int jobID=0, int endfile = 3203, int dataset_
 
 	output_file_base +=dataset_type_strs[dataset_type_code];
 
-	TString output_file_extension = "";   
-	//output_file_extension += output_file_num;   
+	//TString output_file_extension = "";   
+	output_file_extension += output_file_num;   
 	output_file_extension += ".root";
 	TFile *output_file = new TFile((TString) (output_file_base+output_file_extension), "RECREATE");
 	TTree *ftree = new TTree("unzipMixTree", "");    
