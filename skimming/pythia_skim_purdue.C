@@ -62,7 +62,7 @@ float pTrel2 = lep2-pLrel2;
 return (pTrel2 > 0) ? std::sqrt(pTrel2) : 0.0;
 }
 
-void pythia_skim(){
+void pythia_skim_purdue(){
 // Define histograms to be filled with data
 int NPhiBins = 300;
 double phiMin = -TMath::Pi();
@@ -466,7 +466,7 @@ for(int file = 1; file < NFiles+1; file++){
 delete f;
 } // end file loop
 
-auto wf = TFile::Open("/uscms/home/cmbennet/work/pythia_skim_newWeights_pthatcut_30_muptcut_10_16Aug2020.root","recreate");
+auto wf = TFile::Open("/home/clayton/Analysis/code/skimming/pythia_skim_purdue/out.root","recreate");
 
 h_jetpt_raw->Write();
 h_jetpt->Write();

@@ -28,23 +28,29 @@
 #include <array>
 
 
-void DataPPvsPbPbCentralityRegions_fixAtPt100(){
+void MCPPvsPbPbCentralityRegions(){
 
     //TFile *f_pp = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_pp_data_corrpt_muptcut_10.root");
     //TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_PbPb_data_corrpt_muptcut_10.root");
 
-    TFile *f_pp = TFile::Open("/home/clayton/Analysis/data/ppDataSkim_27Aug20/merge.root");
-    TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/data/PbPbDataSkim_27Aug20/merge.root");
+    //TFile *f_pp = TFile::Open("/home/clayton/Analysis/data/ppDataSkim_27Aug20/merge.root");
+    //TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/data/PbPbDataSkim_27Aug20/merge.root");
 
-    TH1D *pp_jetpt, *pp_jetphi, *pp_jeteta, *pp_mujetpt, *pp_mujetphi, *pp_mujeteta, *pp_muPt, *pp_muPhi, *pp_muEta;
+    //TFile *f_pp = TFile::Open("/home/clayton/Analysis/data/ppDataSkim_31Aug20/merge.root");
+    //TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/data/PbPbDataSkim_31Aug20/merge.root");
+
+    TFile *f_pp = TFile::Open("/home/clayton/Analysis/code/skimming/pp_mc_skim/pp_mc_skim_noWeights_pthat30_muptcut10_2Sep20.root");
+    TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/data/PbPbDataSkim_4Sep20/PbPb_mc_skim_slim_CsJets_noWeights_pthat30_muptcut10_4Sep20.root");
+
+    TH1D *pp_jetpt, *pp_jetphi, *pp_jeteta, *pp_mujetpt, *pp_mujetphi, *pp_mujeteta, *pp_muPt, *pp_muPhi, *pp_muEta, *pp_trkPt, *pp_trkEta, *pp_trkPhi;
     TH1D *PbPb_jetpt_cent0to10, *PbPb_jetphi_cent0to10, *PbPb_jeteta_cent0to10, *PbPb_mujetpt_cent0to10, *PbPb_mujetphi_cent0to10, *PbPb_mujeteta_cent0to10, 
-        *PbPb_muPt_cent0to10, *PbPb_muPhi_cent0to10, *PbPb_muEta_cent0to10;
+        *PbPb_muPt_cent0to10, *PbPb_muPhi_cent0to10, *PbPb_muEta_cent0to10, *pp_trkPt_cent0to10, *pp_trkEta_cent0to10, *pp_trkPhi_cent0to10;
     TH1D *PbPb_jetpt_cent10to30, *PbPb_jetphi_cent10to30, *PbPb_jeteta_cent10to30, *PbPb_mujetpt_cent10to30, *PbPb_mujetphi_cent10to30, *PbPb_mujeteta_cent10to30, 
-        *PbPb_muPt_cent10to30, *PbPb_muPhi_cent10to30, *PbPb_muEta_cent10to30;
+        *PbPb_muPt_cent10to30, *PbPb_muPhi_cent10to30, *PbPb_muEta_cent10to30, *pp_trkPt_cent10to30, *pp_trkEta_cent10to30, *pp_trkPhi_cent10to30;
     TH1D *PbPb_jetpt_cent30to50, *PbPb_jetphi_cent30to50, *PbPb_jeteta_cent30to50, *PbPb_mujetpt_cent30to50, *PbPb_mujetphi_cent30to50, *PbPb_mujeteta_cent30to50, 
-        *PbPb_muPt_cent30to50, *PbPb_muPhi_cent30to50, *PbPb_muEta_cent30to50;;
+        *PbPb_muPt_cent30to50, *PbPb_muPhi_cent30to50, *PbPb_muEta_cent30to50, *pp_trkPt_cent30to50, *pp_trkEta_cent30to50, *pp_trkPhi_cent30to50;
     TH1D *PbPb_jetpt_cent50to90, *PbPb_jetphi_cent50to90, *PbPb_jeteta_cent50to90, *PbPb_mujetpt_cent50to90, *PbPb_mujetphi_cent50to90, *PbPb_mujeteta_cent50to90, 
-        *PbPb_muPt_cent50to90, *PbPb_muPhi_cent50to90, *PbPb_muEta_cent50to90;;
+        *PbPb_muPt_cent50to90, *PbPb_muPhi_cent50to90, *PbPb_muEta_cent50to90, *pp_trkPt_cent50to90, *pp_trkEta_cent50to90, *pp_trkPhi_cent50to90;
 
     f_pp->GetObject("h_jetpt",pp_jetpt);
     f_pp->GetObject("h_jetphi",pp_jetphi);
@@ -55,6 +61,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     f_pp->GetObject("h_muPt",pp_muPt);
     f_pp->GetObject("h_muPhi",pp_muPhi);
     f_pp->GetObject("h_muEta",pp_muEta);
+    //f_pp->GetObject("h_trkPt",pp_trkPt);
+    //f_pp->GetObject("h_trkPhi",pp_trkPhi);
+    //f_pp->GetObject("h_trkEta",pp_trkEta);
 
     f_PbPb->GetObject("h_jetpt_cent0to10",PbPb_jetpt_cent0to10);
     f_PbPb->GetObject("h_jetphi_cent0to10",PbPb_jetphi_cent0to10);
@@ -65,6 +74,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     f_PbPb->GetObject("h_muPt_cent0to10",PbPb_muPt_cent0to10);
     f_PbPb->GetObject("h_muPhi_cent0to10",PbPb_muPhi_cent0to10);
     f_PbPb->GetObject("h_muEta_cent0to10",PbPb_muEta_cent0to10);
+    //f_PbPb->GetObject("h_trkPt_cent0to10",PbPb_trkPt_cent0to10);
+    //f_PbPb->GetObject("h_trkPhi_cent0to10",PbPb_trkPhi_cent0to10);
+    //f_PbPb->GetObject("h_trkEta_cent0to10",PbPb_trkEta_cent0to10);
 
     f_PbPb->GetObject("h_jetpt_cent10to30",PbPb_jetpt_cent10to30);
     f_PbPb->GetObject("h_jetphi_cent10to30",PbPb_jetphi_cent10to30);
@@ -75,6 +87,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     f_PbPb->GetObject("h_muPt_cent10to30",PbPb_muPt_cent10to30);
     f_PbPb->GetObject("h_muPhi_cent10to30",PbPb_muPhi_cent10to30);
     f_PbPb->GetObject("h_muEta_cent10to30",PbPb_muEta_cent10to30);
+    //f_PbPb->GetObject("h_trkPt_cent10to30",PbPb_trkPt_cent10to30);
+    //f_PbPb->GetObject("h_trkPhi_cent10to30",PbPb_trkPhi_cent10to30);
+    //f_PbPb->GetObject("h_trkEta_cent10to30",PbPb_trkEta_cent10to30);
 
     f_PbPb->GetObject("h_jetpt_cent30to50",PbPb_jetpt_cent30to50);
     f_PbPb->GetObject("h_jetphi_cent30to50",PbPb_jetphi_cent30to50);
@@ -85,6 +100,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     f_PbPb->GetObject("h_muPt_cent30to50",PbPb_muPt_cent30to50);
     f_PbPb->GetObject("h_muPhi_cent30to50",PbPb_muPhi_cent30to50);
     f_PbPb->GetObject("h_muEta_cent30to50",PbPb_muEta_cent30to50);
+    //f_PbPb->GetObject("h_trkPt_cent30to50",PbPb_trkPt_cent30to50);
+    //f_PbPb->GetObject("h_trkPhi_cent30to50",PbPb_trkPhi_cent30to50);
+    //f_PbPb->GetObject("h_trkEta_cent30to50",PbPb_trkEta_cent30to50);
 
     f_PbPb->GetObject("h_jetpt_cent50to90",PbPb_jetpt_cent50to90);
     f_PbPb->GetObject("h_jetphi_cent50to90",PbPb_jetphi_cent50to90);
@@ -95,6 +113,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     f_PbPb->GetObject("h_muPt_cent50to90",PbPb_muPt_cent50to90);
     f_PbPb->GetObject("h_muPhi_cent50to90",PbPb_muPhi_cent50to90);
     f_PbPb->GetObject("h_muEta_cent50to90",PbPb_muEta_cent50to90);
+    //f_PbPb->GetObject("h_trkPt_cent50to90",PbPb_trkPt_cent50to90);
+    //f_PbPb->GetObject("h_trkPhi_cent50to90",PbPb_trkPhi_cent50to90);
+    //f_PbPb->GetObject("h_trkEta_cent50to90",PbPb_trkEta_cent50to90);
 
 
     // normalize everything by integral
@@ -108,11 +129,15 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     TH1D *pp_muPt_ynorm = (TH1D*) pp_muPt->Clone("pp_muPt_ynorm");
     TH1D *pp_muPhi_ynorm = (TH1D*) pp_muPhi->Clone("pp_muPhi_ynorm");
     TH1D *pp_muEta_ynorm = (TH1D*) pp_muEta->Clone("pp_muEta_ynorm");
-
+    //TH1D *pp_trkPt_ynorm = (TH1D*) pp_trkPt->Clone("pp_trkPt_ynorm");
+    //TH1D *pp_trkPhi_ynorm = (TH1D*) pp_trkPhi->Clone("pp_trkPhi_ynorm");
+    //TH1D *pp_trkEta_ynorm = (TH1D*) pp_trkEta->Clone("pp_trkEta_ynorm");
+    
+    /*
     TAxis *pt_defaultAxis = pp_jetpt->GetXaxis();
     int pt100Bin = pt_defaultAxis->FindBin(100.0);
     cout << "pt 100 bin = " << pt100Bin << endl;
-    
+    */
     TH1D *PbPb_jetpt_cent0to10_ynorm = (TH1D*) PbPb_jetpt_cent0to10->Clone("PbPb_jetpt_cent0to10_ynorm");
     TH1D *PbPb_jetphi_cent0to10_ynorm = (TH1D*) PbPb_jetphi_cent0to10->Clone("PbPb_jetphi_cent0to10_ynorm");
     TH1D *PbPb_jeteta_cent0to10_ynorm = (TH1D*) PbPb_jeteta_cent0to10->Clone("PbPb_jeteta_cent0to10_ynorm");
@@ -122,6 +147,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     TH1D *PbPb_muPt_cent0to10_ynorm = (TH1D*) PbPb_muPt_cent0to10->Clone("PbPb_muPt_cent0to10_ynorm");
     TH1D *PbPb_muPhi_cent0to10_ynorm = (TH1D*) PbPb_muPhi_cent0to10->Clone("PbPb_muPhi_cent0to10_ynorm");
     TH1D *PbPb_muEta_cent0to10_ynorm = (TH1D*) PbPb_muEta_cent0to10->Clone("PbPb_muEta_cent0to10_ynorm");
+    //TH1D *PbPb_trkPt_cent0to10_ynorm = (TH1D*) PbPb_trkPt_cent0to10->Clone("PbPb_trkPt_cent0to10_ynorm");
+    //TH1D *PbPb_trkPhi_cent0to10_ynorm = (TH1D*) PbPb_trkPhi_cent0to10->Clone("PbPb_trkPhi_cent0to10_ynorm");
+    //TH1D *PbPb_trkEta_cent0to10_ynorm = (TH1D*) PbPb_trkEta_cent0to10->Clone("PbPb_trkEta_cent0to10_ynorm");
 
     TH1D *PbPb_jetpt_cent10to30_ynorm = (TH1D*) PbPb_jetpt_cent10to30->Clone("PbPb_jetpt_cent10to30_ynorm");
     TH1D *PbPb_jetphi_cent10to30_ynorm = (TH1D*) PbPb_jetphi_cent10to30->Clone("PbPb_jetphi_cent10to30_ynorm");
@@ -132,6 +160,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     TH1D *PbPb_muPt_cent10to30_ynorm = (TH1D*) PbPb_muPt_cent10to30->Clone("PbPb_muPt_cent10to30_ynorm");
     TH1D *PbPb_muPhi_cent10to30_ynorm = (TH1D*) PbPb_muPhi_cent10to30->Clone("PbPb_muPhi_cent10to30_ynorm");
     TH1D *PbPb_muEta_cent10to30_ynorm = (TH1D*) PbPb_muEta_cent10to30->Clone("PbPb_muEta_cent10to30_ynorm");
+    //TH1D *PbPb_trkPt_cent10to30_ynorm = (TH1D*) PbPb_trkPt_cent10to30->Clone("PbPb_trkPt_cent10to30_ynorm");
+    //TH1D *PbPb_trkPhi_cent10to30_ynorm = (TH1D*) PbPb_trkPhi_cent10to30->Clone("PbPb_trkPhi_cent10to30_ynorm");
+    //TH1D *PbPb_trkEta_cent10to30_ynorm = (TH1D*) PbPb_trkEta_cent10to30->Clone("PbPb_trkEta_cent10to30_ynorm");
 
     TH1D *PbPb_jetpt_cent30to50_ynorm = (TH1D*) PbPb_jetpt_cent30to50->Clone("PbPb_jetpt_cent30to50_ynorm");
     TH1D *PbPb_jetphi_cent30to50_ynorm = (TH1D*) PbPb_jetphi_cent30to50->Clone("PbPb_jetphi_cent30to50_ynorm");
@@ -142,6 +173,9 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     TH1D *PbPb_muPt_cent30to50_ynorm = (TH1D*) PbPb_muPt_cent30to50->Clone("PbPb_muPt_cent30to50_ynorm");
     TH1D *PbPb_muPhi_cent30to50_ynorm = (TH1D*) PbPb_muPhi_cent30to50->Clone("PbPb_muPhi_cent30to50_ynorm");
     TH1D *PbPb_muEta_cent30to50_ynorm = (TH1D*) PbPb_muEta_cent30to50->Clone("PbPb_muEta_cent30to50_ynorm");
+    //TH1D *PbPb_trkPt_cent30to50_ynorm = (TH1D*) PbPb_trkPt_cent30to50->Clone("PbPb_trkPt_cent30to50_ynorm");
+    //TH1D *PbPb_trkPhi_cent30to50_ynorm = (TH1D*) PbPb_trkPhi_cent30to50->Clone("PbPb_trkPhi_cent30to50_ynorm");
+    //TH1D *PbPb_trkEta_cent30to50_ynorm = (TH1D*) PbPb_trkEta_cent30to50->Clone("PbPb_trkEta_cent30to50_ynorm");
 
     TH1D *PbPb_jetpt_cent50to90_ynorm = (TH1D*) PbPb_jetpt_cent50to90->Clone("PbPb_jetpt_cent50to90_ynorm");
     TH1D *PbPb_jetphi_cent50to90_ynorm = (TH1D*) PbPb_jetphi_cent50to90->Clone("PbPb_jetphi_cent50to90_ynorm");
@@ -152,24 +186,33 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     TH1D *PbPb_muPt_cent50to90_ynorm = (TH1D*) PbPb_muPt_cent50to90->Clone("PbPb_muPt_cent50to90_ynorm");
     TH1D *PbPb_muPhi_cent50to90_ynorm = (TH1D*) PbPb_muPhi_cent50to90->Clone("PbPb_muPhi_cent50to90_ynorm");
     TH1D *PbPb_muEta_cent50to90_ynorm = (TH1D*) PbPb_muEta_cent50to90->Clone("PbPb_muEta_cent50to90_ynorm");
+    //TH1D *PbPb_trkPt_cent50to90_ynorm = (TH1D*) PbPb_trkPt_cent50to90->Clone("PbPb_trkPt_cent50to90_ynorm");
+    //TH1D *PbPb_trkPhi_cent50to90_ynorm = (TH1D*) PbPb_trkPhi_cent50to90->Clone("PbPb_trkPhi_cent50to90_ynorm");
+    //TH1D *PbPb_trkEta_cent50to90_ynorm = (TH1D*) PbPb_trkEta_cent50to90->Clone("PbPb_trkEta_cent50to90_ynorm");
 
-    pp_jetpt_ynorm->Scale(1.0/pp_jetpt_ynorm->At(pt100Bin));
+    pp_jetpt_ynorm->Scale(1.0/pp_jetpt_ynorm->Integral());
     pp_jetphi_ynorm->Scale(1.0/pp_jetphi_ynorm->Integral());
     pp_jeteta_ynorm->Scale(1.0/pp_jeteta_ynorm->Integral());
     pp_mujetphi_ynorm->Scale(1.0/pp_mujetphi_ynorm->Integral());
     pp_mujeteta_ynorm->Scale(1.0/pp_mujeteta_ynorm->Integral());
     pp_muPhi_ynorm->Scale(1.0/pp_muPhi_ynorm->Integral());
     pp_muEta_ynorm->Scale(1.0/pp_muEta_ynorm->Integral());
+    //pp_trkPt_ynorm->Scale(1.0/pp_trkPt_ynorm->Integral());
+    //pp_trkPhi_ynorm->Scale(1.0/pp_trkPhi_ynorm->Integral());
+    //pp_trkEta_ynorm->Scale(1.0/pp_trkEta_ynorm->Integral());
 
-    PbPb_jetpt_cent0to10_ynorm->Scale(1.0/PbPb_jetpt_cent0to10_ynorm->At(pt100Bin));
+    PbPb_jetpt_cent0to10_ynorm->Scale(1.0/PbPb_jetpt_cent0to10_ynorm->Integral());
     PbPb_jetphi_cent0to10_ynorm->Scale(1.0/PbPb_jetphi_cent0to10_ynorm->Integral());
     PbPb_jeteta_cent0to10_ynorm->Scale(1.0/PbPb_jeteta_cent0to10_ynorm->Integral());
     PbPb_mujetphi_cent0to10_ynorm->Scale(1.0/PbPb_mujetphi_cent0to10_ynorm->Integral());
     PbPb_mujeteta_cent0to10_ynorm->Scale(1.0/PbPb_mujeteta_cent0to10_ynorm->Integral());
     PbPb_muPhi_cent0to10_ynorm->Scale(1.0/PbPb_muPhi_cent0to10_ynorm->Integral());
     PbPb_muEta_cent0to10_ynorm->Scale(1.0/PbPb_muEta_cent0to10_ynorm->Integral());
+    //PbPb_trkPt_cent0to10_ynorm->Scale(1.0/PbPb_trkPt_cent0to10_ynorm->Integral());
+    //PbPb_trkPhi_cent0to10_ynorm->Scale(1.0/PbPb_trkPhi_cent0to10_ynorm->Integral());
+    //PbPb_trkEta_cent0to10_ynorm->Scale(1.0/PbPb_trkEta_cent0to10_ynorm->Integral());
 
-    PbPb_jetpt_cent10to30_ynorm->Scale(1.0/PbPb_jetpt_cent10to30_ynorm->At(pt100Bin));
+    PbPb_jetpt_cent10to30_ynorm->Scale(1.0/PbPb_jetpt_cent10to30_ynorm->Integral());
     PbPb_jetphi_cent10to30_ynorm->Scale(1.0/PbPb_jetphi_cent10to30_ynorm->Integral());
     PbPb_jeteta_cent10to30_ynorm->Scale(1.0/PbPb_jeteta_cent10to30_ynorm->Integral());
     PbPb_mujetphi_cent10to30_ynorm->Scale(1.0/PbPb_mujetphi_cent10to30_ynorm->Integral());
@@ -177,7 +220,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     PbPb_muPhi_cent10to30_ynorm->Scale(1.0/PbPb_muPhi_cent10to30_ynorm->Integral());
     PbPb_muEta_cent10to30_ynorm->Scale(1.0/PbPb_muEta_cent10to30_ynorm->Integral());
 
-    PbPb_jetpt_cent30to50_ynorm->Scale(1.0/PbPb_jetpt_cent30to50_ynorm->At(pt100Bin));
+    PbPb_jetpt_cent30to50_ynorm->Scale(1.0/PbPb_jetpt_cent30to50_ynorm->Integral());
     PbPb_jetphi_cent30to50_ynorm->Scale(1.0/PbPb_jetphi_cent30to50_ynorm->Integral());
     PbPb_jeteta_cent30to50_ynorm->Scale(1.0/PbPb_jeteta_cent30to50_ynorm->Integral());
     PbPb_mujetphi_cent30to50_ynorm->Scale(1.0/PbPb_mujetphi_cent30to50_ynorm->Integral());
@@ -186,13 +229,26 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     PbPb_muEta_cent30to50_ynorm->Scale(1.0/PbPb_muEta_cent30to50_ynorm->Integral());
 
 
-    PbPb_jetpt_cent50to90_ynorm->Scale(1.0/PbPb_jetpt_cent50to90_ynorm->At(pt100Bin));
+    PbPb_jetpt_cent50to90_ynorm->Scale(1.0/PbPb_jetpt_cent50to90_ynorm->Integral());
     PbPb_jetphi_cent50to90_ynorm->Scale(1.0/PbPb_jetphi_cent50to90_ynorm->Integral());
     PbPb_jeteta_cent50to90_ynorm->Scale(1.0/PbPb_jeteta_cent50to90_ynorm->Integral());
     PbPb_mujetphi_cent50to90_ynorm->Scale(1.0/PbPb_mujetphi_cent50to90_ynorm->Integral());
     PbPb_mujeteta_cent50to90_ynorm->Scale(1.0/PbPb_mujeteta_cent50to90_ynorm->Integral());
     PbPb_muPhi_cent50to90_ynorm->Scale(1.0/PbPb_muPhi_cent50to90_ynorm->Integral());
     PbPb_muEta_cent50to90_ynorm->Scale(1.0/PbPb_muEta_cent50to90_ynorm->Integral());
+
+    // scale by integral
+        pp_mujetpt_ynorm->Scale(1.0/pp_mujetpt_ynorm->Integral());
+        PbPb_mujetpt_cent0to10_ynorm->Scale(1.0/PbPb_mujetpt_cent0to10_ynorm->Integral());
+        PbPb_mujetpt_cent10to30_ynorm->Scale(1.0/PbPb_mujetpt_cent10to30_ynorm->Integral());
+        PbPb_mujetpt_cent30to50_ynorm->Scale(1.0/PbPb_mujetpt_cent30to50_ynorm->Integral());
+        PbPb_mujetpt_cent50to90_ynorm->Scale(1.0/PbPb_mujetpt_cent50to90_ynorm->Integral());
+
+        pp_muPt_ynorm->Scale(1.0/pp_muPt_ynorm->Integral());
+        PbPb_muPt_cent0to10_ynorm->Scale(1.0/PbPb_muPt_cent0to10_ynorm->Integral());
+        PbPb_muPt_cent10to30_ynorm->Scale(1.0/PbPb_muPt_cent10to30_ynorm->Integral());
+        PbPb_muPt_cent30to50_ynorm->Scale(1.0/PbPb_muPt_cent30to50_ynorm->Integral());
+        PbPb_muPt_cent50to90_ynorm->Scale(1.0/PbPb_muPt_cent50to90_ynorm->Integral());
 
     // define rebin axes
      double pt_axis[16] = {50.0,60.0,70.0,80.0,90.0,100.0,120.0,140.0,160.0,180.0,200.0,250.0,300.0,350.0,400.0,500.0};
@@ -220,6 +276,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     TH1D *PbPb_muPt_cent30to50_ynorm_rebin = (TH1D*) PbPb_muPt_cent30to50_ynorm->Rebin(20,"PbPb_muPt_cent30to50_ynorm_rebin",mupt_axis);
     TH1D *PbPb_muPt_cent50to90_ynorm_rebin = (TH1D*) PbPb_muPt_cent50to90_ynorm->Rebin(20,"PbPb_muPt_cent50to90_ynorm_rebin",mupt_axis);
 
+        /*
         TAxis *mujetpt_rebinAxis = pp_mujetpt_ynorm_rebin->GetXaxis();
         int mujetpt100Bin = mujetpt_rebinAxis->FindBin(100.0);
         cout << "mu jet pt 100 bin = " << mujetpt100Bin << endl;
@@ -240,7 +297,8 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
         PbPb_muPt_cent10to30_ynorm_rebin->Scale(1.0/PbPb_muPt_cent10to30_ynorm_rebin->At(muPt100Bin));
         PbPb_muPt_cent30to50_ynorm_rebin->Scale(1.0/PbPb_muPt_cent30to50_ynorm_rebin->At(muPt100Bin));
         PbPb_muPt_cent50to90_ynorm_rebin->Scale(1.0/PbPb_muPt_cent50to90_ynorm_rebin->At(muPt100Bin));
-
+        */
+    
 
     TH1D *pp_jeteta_ynorm_rebin = (TH1D*) pp_jeteta_ynorm->Rebin(30,"pp_jeteta_ynorm_rebin",eta_axis);
     TH1D *pp_mujeteta_ynorm_rebin = (TH1D*) pp_mujeteta_ynorm->Rebin(30,"pp_mujeteta_ynorm_rebin",eta_axis);
@@ -726,10 +784,10 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
       legend->Draw();
 
 
-      pp_jetpt_ynorm_rebin_xnorm->GetYaxis()->SetTitle("1/N^{jet}(p^{jet}_{T} = 100 GeV/c) dN^{jet}/dp^{jet}_{T}");
+      pp_jetpt_ynorm_rebin_xnorm->GetYaxis()->SetTitle("1/N^{jet}_{tot} dN^{jet}/dp^{jet}_{T}");
       pp_jetpt_ynorm_rebin_xnorm->GetYaxis()->SetTitleSize(0.06);
-      pp_jetpt_ynorm_rebin_xnorm->SetMinimum(1e-4);
-      pp_jetpt_ynorm_rebin_xnorm->SetMaximum(1e2);
+      pp_jetpt_ynorm_rebin_xnorm->SetMinimum(1e-7);
+      pp_jetpt_ynorm_rebin_xnorm->SetMaximum(1e-1);
       
 	
 
@@ -774,11 +832,11 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     line->Draw("same");
     
 
-    c1->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/DataPPvsPbPbCentralityRegions_alljets_pt_fixAtPt100.pdf");
+    c1->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/MCPPvsPbPbCentralityRegions_alljets_pt.pdf");
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// muon pt
+// muon jet pt
     TCanvas *c2 = new TCanvas("c2","muon jet pt",500,500);
     c2->cd();
     TPad *pad3 = new TPad("pad3", "pad3", 0.0, 0.3, 1., 1.);
@@ -839,7 +897,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     legend2->Draw();
 
 
-    pp_mujetpt_ynorm_rebin_xnorm->GetYaxis()->SetTitle("1/N^{#mu-jet}(p^{jet}_{T} = 100 GeV/c) dN^{#mu-jet}/dp^{jet}_{T}");
+    pp_mujetpt_ynorm_rebin_xnorm->GetYaxis()->SetTitle("1/N^{#mu-jet}_{tot} dN^{#mu-jet}/dp^{jet}_{T}");
     pp_mujetpt_ynorm_rebin_xnorm->GetYaxis()->SetTitleSize(0.06);
    // pp_mujetpt_ynorm_rebin_xnorm->SetMinimum(1e-8);
    // pp_mujetpt_ynorm_rebin_xnorm->SetMaximum(1e4);
@@ -881,7 +939,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     line2->Draw("same");
     
 
-    c2->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/DataPPvsPbPbCentralityRegions_mujets_pt_fixAtPt100.pdf");
+    c2->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/MCPPvsPbPbCentralityRegions_mujets_pt.pdf");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     TCanvas *c3 = new TCanvas("c3","muon jet eta",500,500);
@@ -986,7 +1044,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     line3->Draw("same");
     
 
-    c3->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/DataPPvsPbPbCentralityRegions_mujets_eta_fixAtPt100.pdf");
+    c3->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/MCPPvsPbPbCentralityRegions_mujets_eta.pdf");
     
 
 
@@ -1094,7 +1152,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     line4->Draw("same");
     
 
-    c4->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/DataPPvsPbPbCentralityRegions_alljets_eta_fixAtPt100.pdf");
+    c4->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/MCPPvsPbPbCentralityRegions_alljets_eta.pdf");
     
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1159,10 +1217,10 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     legend5->Draw();
 
 
-    pp_muPt_ynorm_rebin_xnorm->GetYaxis()->SetTitle("1/N^{#mu}(p_{T}^{#mu} = 100 GeV/c) dN^{#mu}/dp^{#mu}_{T}");
+    pp_muPt_ynorm_rebin_xnorm->GetYaxis()->SetTitle("1/N^{#mu}_{tot} dN^{#mu}/dp^{#mu}_{T}");
     pp_muPt_ynorm_rebin_xnorm->GetYaxis()->SetTitleSize(0.06);
-    pp_muPt_ynorm_rebin_xnorm->SetMinimum(1e-6);
-    pp_muPt_ynorm_rebin_xnorm->SetMaximum(1e3);
+    pp_muPt_ynorm_rebin_xnorm->SetMinimum(1e-8);
+    pp_muPt_ynorm_rebin_xnorm->SetMaximum(1e-1);
 
     c5->cd();
     TPad *pad10 = new TPad("pad10","pad10",0.,0.0,1.,0.3);
@@ -1201,7 +1259,7 @@ void DataPPvsPbPbCentralityRegions_fixAtPt100(){
     line5->Draw("same");
     
 
-    c5->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/DataPPvsPbPbCentralityRegions_muons_pt_fixAtPt100.pdf");
+    c5->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/MCPPvsPbPbCentralityRegions_muons_pt.pdf");
 
 
     

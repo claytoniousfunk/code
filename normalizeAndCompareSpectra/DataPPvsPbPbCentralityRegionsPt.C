@@ -30,8 +30,11 @@
 
 void DataPPvsPbPbCentralityRegionsPt(){
 
-    TFile *f_pp = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_pp_data_corrpt_muptcut_10.root");
-    TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_PbPb_data_corrpt_muptcut_10.root");
+    //TFile *f_pp = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_pp_data_corrpt_muptcut_10.root");
+    //TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/code/makeData/V2/rootFiles/makeDataV2_PbPb_data_corrpt_muptcut_10.root");
+
+    TFile *f_pp = TFile::Open("/home/clayton/Analysis/data/ppDataSkim_27Aug20/merge.root");
+    TFile *f_PbPb = TFile::Open("/home/clayton/Analysis/data/PbPbDataSkim_27Aug20/merge.root");
 
     TH1D *pp_jetpt, *pp_jetphi, *pp_jeteta, *pp_mupt, *pp_muphi, *pp_mueta;
     TH1D *PbPb_jetpt_cent0to10, *PbPb_jetphi_cent0to10, *PbPb_jeteta_cent0to10, *PbPb_mupt_cent0to10, *PbPb_muphi_cent0to10, *PbPb_mueta_cent0to10;

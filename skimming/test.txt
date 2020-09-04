@@ -18,4 +18,3 @@ root://xrootd.rcac.purdue.edu//store/user/kumarv/UICWork/MuonJetAna/Forest/Data/
 root://xrootd.rcac.purdue.edu//store/user/kumarv/UICWork/MuonJetAna/Forest/Data/PbPbData_HiSingleMuon_29April_ReRecoV1/HISingleMuon/crab_PbPbData_HiSingleMuon_29April_ReRecoV1/190430_000000/0000/SingleMuonTrigger_HiRedForestAOD_ReReco_114.root
 root://xrootd.rcac.purdue.edu//store/user/kumarv/UICWork/MuonJetAna/Forest/Data/PbPbData_HiSingleMuon_29April_ReRecoV1/HISingleMuon/crab_PbPbData_HiSingleMuon_29April_ReRecoV1/190430_000000/0000/SingleMuonTrigger_HiRedForestAOD_ReReco_115.root
 root://xrootd.rcac.purdue.edu//store/user/kumarv/UICWork/MuonJetAna/Forest/Data/PbPbData_HiSingleMuon_29April_ReRecoV1/HISingleMuon/crab_PbPbData_HiSingleMuon_29April_ReRecoV1/190430_000000/0000/SingleMuonTrigger_HiRedForestAOD_ReReco_116.root
-
