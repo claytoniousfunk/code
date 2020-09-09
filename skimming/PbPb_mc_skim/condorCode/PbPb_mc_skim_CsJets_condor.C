@@ -62,7 +62,7 @@ float pTrel2 = lep2-pLrel2;
 return (pTrel2 > 0) ? std::sqrt(pTrel2) : 0.0;
 }
 
-void PbPb_mc_skim_CsJets(){
+void PbPb_mc_skim_CsJets_condor(TString input, TString output){
 // Define histograms to be filled with data
 const int NPhiBins = 300;
 const double phiMin = -TMath::Pi();
@@ -681,18 +681,16 @@ int NFiles = 0;
 
 	cout <<"number of files ="<< NFiles << endl;
 */
-int NFiles = 1;
-// file loop
+
+
 TF1 *vz_fit_fxn = new TF1("vz_fit_fxn","[0] + [1]*x + [2]*x*x + [3]*x*x*x",-15.0,15.0);
 vz_fit_fxn->SetParameters(1.02937e+00,-5.25572e-03,-8.21959e-04,2.60358e-05);
 
 TF1 *pt_fit_fxn = new TF1("pt_fit_fxn","[0]*exp([1]*x) + [2]*exp([3]*x)",50.0,500.0);
 pt_fit_fxn->SetParameters(2.95395e+00,-2.60850e-02,5.71522e-01,-2.90376e-03);
 
-for(int file = 1; file < NFiles+1; file++){
-//for(int file = 82; file < 90; file++){
-	cout << "Processing file " << file << "/"<<NFiles<< endl;
-        TFile *f = TFile::Open(Form("root://cmsxrootd.fnal.gov//store/group/phys_heavyions/jviinika/PbPb2018MC_Dijet_pThat15_CP5_HydjetDrumMB_5p02TeV_HINPbPbAutumn18-mva98_103X_first2k_addedEventPlane/0000/HiForestAOD_%d.root",file));
+
+        TFile *f = TFile::Open(input);
 
 	auto em = new eventMap(f);
         em->isMC = 1;
@@ -825,7 +823,7 @@ for(int file = 1; file < NFiles+1; file++){
 
 			double w_pt = 1.0/(pt_fit_fxn->Eval(em->jetpt[jetj]));
 			// double w_tot = w_vz*w_pt*em->weight;	
-			double w_tot = 1;
+			double w_tot = em->weight;
 
 			if(jetPtj<ptMin || jetPtj>ptMax || fabs(jetEtaj)>etaMax || jetPhij==-999){continue;}
 			
@@ -1428,10 +1426,7 @@ for(int file = 1; file < NFiles+1; file++){
 
 	} // end event loop
 
-delete f;
-} // end file loop
-
-auto wf = TFile::Open("/uscms/home/cmbennet/work/PbPb_mc_skim_superSlim_CsJets_noWeights_pthat30_muptcut10_4Sep20.root","recreate");
+auto wf = TFile::Open(output,"recreate");
 
 h_jetphi->Write();
         h_jetphi_cent0to10->Write();

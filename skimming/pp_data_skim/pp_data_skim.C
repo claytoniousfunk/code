@@ -70,9 +70,9 @@ double phiMax = TMath::Pi();
 TH1D *h_jetphi = new TH1D("h_jetphi","reco jet #phi",NPhiBins,phiMin,phiMax);
 TH1D *h_mujetphi = new TH1D("h_mujetphi","reco muon jet #phi",NPhiBins,phiMin,phiMax);
 TH1D *h_trkPhi = new TH1D("h_trkPhi","track #phi",NPhiBins,phiMin,phiMax);
-const int NEtaBins = 320;
-const double etaMin = -1.6;
-const double etaMax = 1.6;
+const int NEtaBins = 260;
+const double etaMin = -1.3;
+const double etaMax = 1.3;
 const int NTrkEtaBins = 480;
 const double trkEtaMin = -2.4;
 const double trkEtaMax = 2.4;
@@ -93,7 +93,8 @@ const int NMuPtBins = 500;
 const double muPtMin = 0.0;
 const double muPtMax = 500.0;
 TH1D *h_muPt = new TH1D("h_muPt","muon p_{T}",NMuPtBins,muPtMin,muPtMax);
-TH1D *h_muEta = new TH1D("h_muEta","muon #eta",NEtaBins,etaMin,etaMax);
+TH1D *h_muInJetPt = new TH1D("h_muInJetPt","in-jet muon p_{T}",NMuPtBins,muPtMin,muPtMax);
+TH1D *h_muEta = new TH1D("h_muEta","muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
 TH1D *h_muPhi = new TH1D("h_muPhi","muon #phi",NPhiBins,phiMin,phiMax);
 TH1D *h_muRelPt = new TH1D("h_muRelPt","muon rel pt",50,0.0,5.0);
 // event info
@@ -114,6 +115,7 @@ h_jetpt->Sumw2();
 h_mujetpt->Sumw2();
 h_trkPt->Sumw2();
 h_muPt->Sumw2();
+h_muInJetPt->Sumw2();
 h_muEta->Sumw2();
 h_muPhi->Sumw2();
 h_muRelPt->Sumw2();
@@ -125,10 +127,10 @@ TFile *f = TFile::Open(input);
 	auto em = new eventMap(f);
         em->isMC = 0;
         em->init();
-		em->loadTrack();
+	em->loadTrack();
         em->loadJet("ak4PFJetAnalyzer");
         em->loadMuon("ggHiNtuplizerGED");
-		Long64_t NEvents = em->evtTree->GetEntries();
+	Long64_t NEvents = em->evtTree->GetEntries();
 
 	// event loop
 	int evi_frac = 0;
@@ -138,14 +140,14 @@ TFile *f = TFile::Open(input);
 		//event cuts
 		
 		if(em->vz>15.0){continue;}
-        if(em->hiBin>180){continue;}
+        	if(em->hiBin>180){continue;}
 		h_vz->Fill(em->vz);
-        h_hiBin->Fill(em->hiBin);
+        	h_hiBin->Fill(em->hiBin);
 
 		if((100*evi/NEvents)%5==0 && 100*evi/NEvents > evi_frac){
                 	cout<<"evt frac: "<<evi_frac<<"%"<<endl;
                  }
-        evi_frac = 100*evi/NEvents;
+        	evi_frac = 100*evi/NEvents;
 		
 		// track loop
 		for(int trki=0; trki < em->ntrk; trki++){
@@ -178,8 +180,8 @@ TFile *f = TFile::Open(input);
 					|| em->muStations->at(muj)<= 1 || em->muTrkLayers->at(muj)<=5 || em->muPixelHits->at(muj)<=0 || em->muPt->at(muj) < muPtCut){continue;}
 
 			h_muPt->Fill(muPtj);
-            h_muEta->Fill(muEtaj);
-            h_muPhi->Fill(muPhij);
+            		h_muEta->Fill(muEtaj);
+            		h_muPhi->Fill(muPhij);
 			
 			
 		}
@@ -187,12 +189,12 @@ TFile *f = TFile::Open(input);
 		//reco jet loop
 		for(int jetj = 0; jetj < em->njet; jetj++){
 
-            double jetPtj = em->jetpt[jetj];
+            		double jetPtj = em->jetpt[jetj];
 			double jetEtaj = em->jeteta[jetj];
 			double jetPhij = em->jetphi[jetj];
 			
 	
-            if(jetPtj<ptMin || jetPtj>ptMax || fabs(jetEtaj)>etaMax || jetPhij==-999){continue;}
+            		if(jetPtj<ptMin || jetPtj>ptMax || fabs(jetEtaj)>etaMax || jetPhij==-999){continue;}
 				
 			h_jetpt->Fill(jetPtj);
 			h_jeteta->Fill(jetEtaj);
@@ -215,11 +217,11 @@ TFile *f = TFile::Open(input);
 					|| em->muStations->at(mui)<= 1 || em->muTrkLayers->at(mui)<=5 || em->muPixelHits->at(mui)<=0 || em->muPt->at(mui) < muPtCut){continue;}
 				//cout << "muon pt =  " << em->muPt->at(mui-1) << endl;
 				
-                double muPti = em->muPt->at(mui);
+                		double muPti = em->muPt->at(mui);
 				double muEtai = em->muEta->at(mui);
 				double muPhii = em->muPhi->at(mui);
 
-                double deltaEtaij = muEtai-jetEtaj;
+                		double deltaEtaij = muEtai-jetEtaj;
 				double deltaPhiij = acos(cos(muPhii-jetPhij));
 				double deltaRij = sqrt(pow(deltaEtaij,2)+pow(deltaPhiij,2));
 				double muRelPt = getPtRel(muPti,muEtai,muPhii,jetPtj,jetEtaj,jetPhij);
@@ -229,13 +231,13 @@ TFile *f = TFile::Open(input);
 					deltaRmin = deltaRij;
 					muRelPtMin = muRelPt;
 					muJetPtMin = jetPtj;
-                    muJetEtaMin = jetEtaj;
+                    			muJetEtaMin = jetEtaj;
 					muJetPhiMin = jetPhij;
 					muPtMin = muPti;
 				}
 			} // end muon loop
 				if(deltaRmin==100000.0){continue;}	
-				if(muRelPtMin==-999.0 || muJetPtMin==-999.0 || muJetEtaMin==-999.0 || muJetPhiMin==-999.0){continue;}
+				if(muPtMin==-999.0 || muRelPtMin==-999.0 || muJetPtMin==-999.0 || muJetEtaMin==-999.0 || muJetPhiMin==-999.0){continue;}
 
 				h_deltaR->Fill(deltaRmin);
 				
@@ -244,6 +246,7 @@ TFile *f = TFile::Open(input);
 					h_mujetpt->Fill(muJetPtMin);
 					h_mujeteta->Fill(muJetEtaMin);
 					h_mujetphi->Fill(muJetPhiMin);
+					h_muInJetPt->Fill(muPtMin);
 				}
 
 		} // end reco jet loop
@@ -264,6 +267,7 @@ h_jetpt->Write();
 h_mujetpt->Write();
 h_trkPt->Write();
 h_muPt->Write();
+h_muInJetPt->Write();
 h_muEta->Write();
 h_muPhi->Write();
 h_muRelPt->Write();

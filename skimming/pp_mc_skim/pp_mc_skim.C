@@ -295,14 +295,13 @@ for(int file = 1; file < NFiles+1; file++){
         evi_frac = 100*evi/NEvents;
 		//cout << "Number of jets = " << em->njet << endl;
         
+		const double trkPtCut = 1.0;
 		// track loop
 		for(int trki=0; trki < em->ntrk; trki++){
 
 			double trkPti = em->trkpt[trki];
 			double trkEtai = em->trketa[trki];
 			double trkPhii = em->trkphi[trki];
-
-			const double trkPtCut = 1.0;
 
 			if(trkPti < trkPtCut || TMath::Abs(trkEtai)>trkEtaMax) {continue;}
 			h_trkPt->Fill(trkPti);
@@ -340,7 +339,7 @@ for(int file = 1; file < NFiles+1; file++){
 			//cout << "reco jet pt_" << jeti << " = " << em->jetpt[jeti] <<"  ////  " << "gen jet pt_"<<jeti<<" = "<<em->genjetpt[jeti]<<endl;
 			double w_pt = 1.0/(pt_fit_fxn->Eval(em->jetpt[jetj]));
 			// double w_tot = w_vz*w_pt*em->weight;	
-			double w_tot = 1;
+			double w_tot = em->weight;
 
 			if(jetPtj<ptMin || jetPtj>ptMax || fabs(jetEtaj)>etaMax || jetPhij==-999){continue;}
 			
@@ -537,7 +536,7 @@ delete f;
 } // end file loop
 
 //auto wf = TFile::Open("/uscms/home/cmbennet/work/pythia_skim_newWeights_pthatcut_30_muptcut_10_16Aug2020.root","recreate");
-auto wf = TFile::Open("/uscms/home/cmbennet/work/pp_mc_skim_noWeights_pthat30_muptcut10_2Sep20.root","recreate");
+auto wf = TFile::Open("/uscms/home/cmbennet/work/pp_mc_skim_pthatWeight_pthatcut30_muptcut10_8Sep20.root","recreate");
 
 h_jetpt_raw->Write();
 h_jetpt->Write();
@@ -594,6 +593,9 @@ h_vz->Write();
 h_hiBin->Write();
 h_pthat->Write();
 h_deltaR->Write();
+h_trkPt->Write();
+h_trkPhi->Write();
+h_trkEta->Write();
 
 wf->Close();
 

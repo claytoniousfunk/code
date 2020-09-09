@@ -43,8 +43,11 @@ double func_temp(double *x, double *par){
 void normalizeAndCompareSpectraPtJussiVClaytonWeighted(){
 
 	//TFile* f_clayton =TFile::Open("/home/clayton/Analysis/data/ppskim/clayton_pp_mc_skim_muptcut_10.root"); 
-    TFile* f_clayton =TFile::Open("/home/clayton/Analysis/data/ppskim/pythia_skim_newWeights_pthatcut_50_muptcut_10_16Aug2020.root"); 
-	TFile* f_jussi =TFile::Open("/home/clayton/Analysis/data/jussiPPSpectra/ppMC2017_RecoJets_Pythia8_pfJets_wtaAxis_JECv4_processed_2019-09-28.root"); 
+    //TFile* f_clayton =TFile::Open("/home/clayton/Analysis/code/skimming/pp_mc_skim/pp_mc_skim_pthatWeight_pthatcut30_muptcut10_8Sep20.root"); 
+	//TFile* f_jussi =TFile::Open("/home/clayton/Analysis/data/jussiPPSpectra/ppMC2017_RecoJets_Pythia8_pfJets_wtaAxis_jetWeight_JECv4_processed_2019-11-21.root");
+
+    TFile* f_clayton =TFile::Open("/home/clayton/Analysis/code/skimming/pp_data_skim/merge.root"); 
+	TFile* f_jussi =TFile::Open("/home/clayton/Analysis/data/jussiPPSpectra/ppData2017_pfJets_wtaAxis_JECv4_processed_2020-02-04.root"); 
 
 
 	
@@ -78,34 +81,7 @@ void normalizeAndCompareSpectraPtJussiVClaytonWeighted(){
           clayton_pt_rebin_xnorm->SetBinError(i,zc/xc);
       }
   }
-  TF1 *fit_fxn = new TF1("fit_fxn","[0]*exp([1]*x) + [2]*exp([3]*x)",50.0,500.0);
   
-  double a0 = 5.65463e-01;
-  double e0 = 6.76497e-03;
-  double a1 = -2.92413e-03;
-  double e1 = 4.93041e-05;
-  double a2 = 2.96635e+00;
-  double e2 = 1.94034e-02;
-  double a3 = -2.59675e-02;
-  double e3 = 1.98715e-04;
-
-  fit_fxn->SetParameters(a0,a1,a2,a3);
-
-  TH1D *clayton_pt_rebin_xnorm_fitscaled = (TH1D*) clayton_pt_rebin_xnorm->Clone("clayton_pt_rebin_xnorm_fitscaled");
-  for(int k=0;k<Nc;k++){
-        double pteval = clayton_pt_rebin_xnorm_fitscaled->GetXaxis()->GetBinCenter(k);
-        double fitscale = fit_fxn->Eval(pteval);
-        double oldval = clayton_pt_rebin_xnorm_fitscaled->GetBinContent(k);
-        double olderror = clayton_pt_rebin_xnorm_fitscaled->GetBinError(k);
-        double newval = oldval/fitscale;
-        double newerror = newval*TMath::Sqrt(TMath::Power(olderror/oldval,2) + TMath::Power(e0/a0,2) + TMath::Power(e1/a1,2) + TMath::Power(e2/a2,2) + TMath::Power(e3/a3,2));
-        clayton_pt_rebin_xnorm_fitscaled->SetBinContent(k,newval);
-        clayton_pt_rebin_xnorm_fitscaled->SetBinError(k,newerror);
-  }
-
-
-
-
 
   int Nj = jussi_pt_rebin_xnorm->GetSize();
   for(int j=0;j<Nj;j++){
@@ -201,7 +177,7 @@ void normalizeAndCompareSpectraPtJussiVClaytonWeighted(){
     r->SetFillColorAlpha(kBlack,0.7);
     r->SetStats(0);
     r->SetMinimum(0.0);
-    r->SetMaximum(12.0);
+    r->SetMaximum(6.0);
     r->GetXaxis()->SetTitle("p_{T}^{jet} [GeV/c]");
     r->GetYaxis()->SetTitle("Clayton / Jussi");
     r->SetTitle("");
@@ -214,7 +190,8 @@ void normalizeAndCompareSpectraPtJussiVClaytonWeighted(){
     line->SetLineStyle(7);
     line->Draw();
 
-    c2->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/pythiaDataPtCompareJussiVClaytonWeighted.pdf");
+    //c2->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/pythiaPtCompareJussiVClaytonWeighted.pdf");
+    c2->SaveAs("/home/clayton/Analysis/code/normalizeAndCompareSpectra/figures/dataPtCompareJussiVClaytonWeighted.pdf");
 
 
 
